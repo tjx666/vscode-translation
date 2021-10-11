@@ -1,0 +1,80 @@
+{
+    "name": "vscode-translation",
+    "displayName": "Translation",
+    "description": "A translation tool for Visual Studio Code.",
+    "version": "1.0.0",
+    "engines": {
+        "vscode": "^1.61.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "extensionKind": [
+        "ui",
+        "workspace"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/caiqichang/vscode-translation"
+    },
+    "activationEvents": [
+        "onCommand:simpleTranslate",
+        "onCommand:completeTranslate",
+        "onCommand:regularExpressionTest"
+    ],
+    "main": "./extension.js",
+    "contributes": {
+        "commands": [
+            {
+                "command": "simpleTranslate",
+                "title": "Translate (Simple)"
+            },
+            {
+                "command": "completeTranslate",
+                "title": "Translate (Complete)"
+            },
+            {
+                "command": "regularExpressionTest",
+                "title": "Regular Expression Text"
+            }
+        ],
+        "menus": {
+            "commandPalette": [
+                {
+                    "command": "simpleTranslate",
+                    "when": "false"
+                }
+            ],
+            "editor/context": [
+                {
+                    "command": "simpleTranslate",
+                    "when": "editorHasSelection",
+                    "group": "translation"
+                },
+                {
+                    "command": "completeTranslate",
+                    "when": "editorHasSelection",
+                    "group": "translation"
+                }
+            ]
+        }
+    },
+    "scripts": {
+        "lint": "eslint .",
+        "pretest": "npm run lint",
+        "test": "node ./test/runTest.js",
+        "prepackage": "node script/pre-package.js",
+        "package": "npx --package vsce vsce package"
+    },
+    "devDependencies": {
+        "@types/vscode": "^1.61.0",
+        "@types/glob": "^7.1.4",
+        "@types/mocha": "^9.0.0",
+        "@types/node": "14.x",
+        "eslint": "^7.32.0",
+        "glob": "^7.1.7",
+        "mocha": "^9.1.1",
+        "typescript": "^4.4.3",
+        "@vscode/test-electron": "^1.6.2"
+    }
+}

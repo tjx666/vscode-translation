@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Regular Expression Test</title>
+    <style>
+        body, input, textarea {
+            font-family: var(--vscode-editor-font-family);
+            font-weight: var(--vscode-editor-font-weight);
+            font-size: var(--vscode-editor-font-size);
+        }
+
+        .input-box {
+            width: 100%;
+        }
+
+        .True {
+            color: green;
+        }
+
+        .False {
+            color: red;
+        }
+
+        .row {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <div class="row">
+            <label>Regular Expression: </label>
+            <input id="regex" class="input-box" oninput="check()" />
+        </div>
+        <div class="row">
+            <label>Content to test: </label>
+            <textarea id="content" rows="5" class="input-box" oninput="check()"></textarea>
+        </div>
+        <div class="row">
+            <label>Result: </label>
+            <div id="result"></div>
+        </div>
+    </div>
+    <script>
+        'use strict';
+        const vscode = acquireVsCodeApi();
+
+        const regex = document.querySelector('#regex');
+        const content = document.querySelector('#content');
+        const result = document.querySelector('#result');
+
+        const check = () => {
+            vscode.setState({regex: regex.value, content: content.value});
+            try {
+                let pattern = new RegExp(regex.value, 'g');
+                let match = content.value.match(pattern);
+                result.innerHTML = match
+                    ? `<span class="True">True, match: <br>${match.join('<br>')}</span>`
+                    : '<span class="False">False</span>';
+            } catch (e) {
+                result.innerHTML = e.message;
+            }
+        };
+
+        window.addEventListener('load', event => {
+            let preData = vscode.getState();
+            if (preData) {
+                regex.value = preData.regex;
+                content.value = preData.content;
+                check();
+            }
+        });
+    </script>
+</body>
+
+</html>
