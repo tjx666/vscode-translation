@@ -1,18 +1,25 @@
 const vscode = require('vscode');
 const fs = require('fs');
 
-const handler = context => {
-    fs.readFile(`${context.extensionPath}/src/webview/regular-expression-test.html`, (error, content) => {
-        if (error) {
-            vscode.window.showErrorMessage(error.message);
-            return;
-        }
+let panel = null;
 
-        const panel = vscode.window.createWebviewPanel('regularExpressionTestPanel', 'Regular Expression Test', vscode.ViewColumn.Beside, {
-            enableScripts: true
+const handler = context => {
+    if (panel) {
+        panel.reveal();
+    }else {
+        fs.readFile(`${context.extensionPath}/src/webview/regular-expression-test.html`, (error, content) => {
+            if (error) {
+                vscode.window.showErrorMessage(error.message);
+                return;
+            }
+    
+            panel = vscode.window.createWebviewPanel('regularExpressionTestPanel', 'Regular Expression Test', vscode.ViewColumn.Beside, {
+                enableScripts: true,
+            });
+            panel.webview.html = content.toString();
+            panel.onDidDispose(() => panel = null);
         });
-        panel.webview.html = content.toString();
-    });
+    }
 };
 
 module.exports = {

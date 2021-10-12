@@ -3,6 +3,7 @@
     "displayName": "Translation",
     "description": "A translation tool for Visual Studio Code.",
     "version": "1.0.0",
+    "publisher": "caiqichang",
     "engines": {
         "vscode": "^1.61.0"
     },
@@ -17,13 +18,81 @@
         "type": "git",
         "url": "https://github.com/caiqichang/vscode-translation"
     },
+    "main": "./extension.js",
     "activationEvents": [
         "onCommand:simpleTranslate",
         "onCommand:completeTranslate",
+        "onCommand:translation",
         "onCommand:regularExpressionTest"
     ],
-    "main": "./extension.js",
     "contributes": {
+        "configuration": {
+            "title": "Translation",
+            "properties": {
+                "translation.source-language": {
+                    "title": "Source Language",
+                    "description": "Default source language for translation.",
+                    "type": "string",
+                    "default": "auto",
+                    "enum": ["auto", "zh-CN", "en", "zh-TW", "sq", "ar", "am", "az", "ga", "et", 
+                            "eu", "be", "bg", "is", "pl", "bs", "fa", "af", "da", "de", 
+                            "ru", "fr", "tl", "fi", "fy", "km", "ka", "gu", "kk", "ht", 
+                            "ko", "ha", "nl", "ky", "gl", "ca", "cs", "kn", "co", "hr", 
+                            "ku", "la", "lv", "lo", "lt", "lb", "rw", "ro", "mg", "mt", 
+                            "mr", "ml", "ms", "mk", "mi", "mn", "bn", "my", "hmn", "xh",
+                            "zu", "ne", "no", "pa", "pt", "ps", "ny", "ja", "sv", "sm", 
+                            "sr", "st", "si", "eo", "sk", "sl", "sw", "gd", "ceb", "so", 
+                            "tg", "te", "ta", "th", "tr", "tk", "cy", "ur", "uk", "uz", 
+                            "es", "iw", "el", "haw", "sd", "hu", "sn", "hy", "ig", "it", 
+                            "yi", "hi", "su", "id", "jw", "yo", "vi"
+                    ],
+                    "enumDescriptions": ["Auto Check Language", "Chinese (Simple)", "English", "Chinese (Traditional)", "Albanian", "Arabic", "Amharic", "Azerbaijani", "Irish", "Estonian", 
+                            "Basque", "Belarusian", "Bulgarian", "Icelandic", "Polish", "Bosnian", "Persian", "Afrikaans", "Danish", "German", 
+                            "Russian", "French", "Filipino", "Finnish", "Frisian", "Khmer", "Georgian", "Gujarati", "Kazakh", "Haitian Creole", 
+                            "Korean", "Hausa", "Dutch", "Kyrgyz", "Galician", "Catalan", "Czech", "Kannada", "Corsican", "Croatian", 
+                            "Kurdish", "Latin", "Latvian", "Lao", "Lithuanian", "Luxembourgish", "Kinyarwanda", "Romanian", "Malagasy", "Maltese", 
+                            "Marathi", "Malayalam", "Malay", "Macedonian", "Maori", "Mongolian", "Bengali", "Myanmar", "Hmong", "Xhosa", 
+                            "Zulu", "Nepali", "Norwegian", "Punjabi", "Portuguese", "Pashto", "Chichewa", "Japanese", "Swedish", "Samoan", 
+                            "Serbian", "Sesotho", "Sinhala", "Esperanto", "Slovak", "Slovenian", "Swahili", "Scots Gaelic", "Cebuano", "Somali", 
+                            "Tajik", "Telugu", "Tamil", "Thai", "Turkish", "Turkmen", "Welsh", "Urdu", "Ukrainian", "Uzbek", 
+                            "Spanish", "Hebrew", "Greek", "Hawaiian", "Sindhi", "Hungarian", "Shona", "Armenian", "Igbo", "Italian", 
+                            "Yiddish", "Hindi", "Sundanese", "Indonesian", "Javanese", "Yoruba", "Vietnamese"
+                    ]
+                },
+                "translation.target-language": {
+                    "title": "Target Language",
+                    "description": "Default target language for translation.",
+                    "type": "string",
+                    "default": "en",
+                    "enum": [
+                            "zh-CN", "en", "zh-TW", "sq", "ar", "am", "az", "ga", "et", 
+                            "eu", "be", "bg", "is", "pl", "bs", "fa", "af", "da", "de", 
+                            "ru", "fr", "tl", "fi", "fy", "km", "ka", "gu", "kk", "ht", 
+                            "ko", "ha", "nl", "ky", "gl", "ca", "cs", "kn", "co", "hr", 
+                            "ku", "la", "lv", "lo", "lt", "lb", "rw", "ro", "mg", "mt", 
+                            "mr", "ml", "ms", "mk", "mi", "mn", "bn", "my", "hmn", "xh",
+                            "zu", "ne", "no", "pa", "pt", "ps", "ny", "ja", "sv", "sm", 
+                            "sr", "st", "si", "eo", "sk", "sl", "sw", "gd", "ceb", "so", 
+                            "tg", "te", "ta", "th", "tr", "tk", "cy", "ur", "uk", "uz", 
+                            "es", "iw", "el", "haw", "sd", "hu", "sn", "hy", "ig", "it", 
+                            "yi", "hi", "su", "id", "jw", "yo", "vi"
+                    ],
+                    "enumDescriptions": [
+                            "Chinese (Simple)", "English", "Chinese (Traditional)", "Albanian", "Arabic", "Amharic", "Azerbaijani", "Irish", "Estonian", 
+                            "Basque", "Belarusian", "Bulgarian", "Icelandic", "Polish", "Bosnian", "Persian", "Afrikaans", "Danish", "German", 
+                            "Russian", "French", "Filipino", "Finnish", "Frisian", "Khmer", "Georgian", "Gujarati", "Kazakh", "Haitian Creole", 
+                            "Korean", "Hausa", "Dutch", "Kyrgyz", "Galician", "Catalan", "Czech", "Kannada", "Corsican", "Croatian", 
+                            "Kurdish", "Latin", "Latvian", "Lao", "Lithuanian", "Luxembourgish", "Kinyarwanda", "Romanian", "Malagasy", "Maltese", 
+                            "Marathi", "Malayalam", "Malay", "Macedonian", "Maori", "Mongolian", "Bengali", "Myanmar", "Hmong", "Xhosa", 
+                            "Zulu", "Nepali", "Norwegian", "Punjabi", "Portuguese", "Pashto", "Chichewa", "Japanese", "Swedish", "Samoan", 
+                            "Serbian", "Sesotho", "Sinhala", "Esperanto", "Slovak", "Slovenian", "Swahili", "Scots Gaelic", "Cebuano", "Somali", 
+                            "Tajik", "Telugu", "Tamil", "Thai", "Turkish", "Turkmen", "Welsh", "Urdu", "Ukrainian", "Uzbek", 
+                            "Spanish", "Hebrew", "Greek", "Hawaiian", "Sindhi", "Hungarian", "Shona", "Armenian", "Igbo", "Italian", 
+                            "Yiddish", "Hindi", "Sundanese", "Indonesian", "Javanese", "Yoruba", "Vietnamese"
+                    ]
+                }
+            }
+        },
         "commands": [
             {
                 "command": "simpleTranslate",
@@ -32,6 +101,10 @@
             {
                 "command": "completeTranslate",
                 "title": "Translate (Complete)"
+            },
+            {
+                "command": "translation",
+                "title": "Translation"
             },
             {
                 "command": "regularExpressionTest",
@@ -43,18 +116,22 @@
                 {
                     "command": "simpleTranslate",
                     "when": "false"
+                },
+                {
+                    "command": "completeTranslate",
+                    "when": "false"
                 }
             ],
             "editor/context": [
                 {
                     "command": "simpleTranslate",
                     "when": "editorHasSelection",
-                    "group": "translation"
+                    "group": "0_translation@1"
                 },
                 {
                     "command": "completeTranslate",
                     "when": "editorHasSelection",
-                    "group": "translation"
+                    "group": "0_translation@2"
                 }
             ]
         }
@@ -64,7 +141,7 @@
         "pretest": "npm run lint",
         "test": "node ./test/runTest.js",
         "prepackage": "node script/pre-package.js",
-        "package": "npx --package vsce vsce package"
+        "package": "npx --package vsce vsce package -o build/"
     },
     "devDependencies": {
         "@types/vscode": "^1.61.0",

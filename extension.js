@@ -5,10 +5,6 @@ const vscode = require('vscode');
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 
-const register = (command, handler) => {
-    vscode.commands.registerCommand(command, () => handler(context));
-};
-
 const simpleTranslate = require('./src/command/simple-translate.js');
 const completeTranslate = require('./src/command/complete-translate.js');
 const regularExpressionTest = require('./src/command/regular-expression-test.js');
@@ -17,12 +13,13 @@ const regularExpressionTest = require('./src/command/regular-expression-test.js'
  * @param {vscode.ExtensionContext} context
  */
 function activate(context) {
-    const register = (command, handler) => {
-        vscode.commands.registerCommand(command, () => handler(context));
+    const register = (command, handler, handlerParam) => {
+        vscode.commands.registerCommand(command, () => handler(context, handlerParam));
     };
 
     register('simpleTranslate', simpleTranslate.handler);
-    register('completeTranslate', completeTranslate.handler);
+    register('completeTranslate', completeTranslate.handler, {fromCommand: false});
+    register('translation', completeTranslate.handler, {fromCommand: true});
     register('regularExpressionTest', regularExpressionTest.handler);
 }
 
