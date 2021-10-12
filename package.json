@@ -2,7 +2,7 @@
     "name": "vscode-translation",
     "displayName": "Translation",
     "description": "A translation tool for Visual Studio Code.",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "publisher": "caiqichang",
     "engines": {
         "vscode": "^1.61.0"
@@ -10,6 +10,8 @@
     "categories": [
         "Other"
     ],
+    "keywords": ["translate", "google", "language", "vscode"],
+    "icon": "resources/vscode-translation-icon.png",
     "extensionKind": [
         "ui",
         "workspace"
@@ -108,7 +110,7 @@
             },
             {
                 "command": "regularExpressionTest",
-                "title": "Regular Expression Text"
+                "title": "Regular Expression Test"
             }
         ],
         "menus": {

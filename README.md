@@ -30,7 +30,7 @@ This extension provides translation (based on Google Translation) support for Vi
 - Select text in editor and right click, choose `Translate (Simple)`,
 and the translation for selected text will be showed in notification.
 
-![simple-translate-screenshot](screenshot/simple-translate.jpg)
+![simple-translate-screenshot](resources/screenshot/simple-translate.jpg)
 
 [Back to top](#features)
 
@@ -38,18 +38,18 @@ and the translation for selected text will be showed in notification.
 - Select text in editor and right click, choose `Translate (Complete)`,
 and the translation for selected text will be showed in Translation panel.
 
-![complete-translate-screenshot](screenshot/complete-translate.jpg)
+![complete-translate-screenshot](resources/screenshot/complete-translate.jpg)
 
 - Use command `Translation` to open Translation panel.
 
-![complete-translate-command-screenshot](screenshot/complete-translate-command.jpg)
+![complete-translate-command-screenshot](resources/screenshot/complete-translate-command.jpg)
 
 [Back to top](#features)
 
 ### Regular Expression Test
 - Use command `Regular Expression Test` to open Regular Expression Test panel.
 
-![regular-expression-test-screenshot](screenshot/regular-expression-test.jpg)
+![regular-expression-test-screenshot](resources/screenshot/regular-expression-test.jpg)
 
 [Back to top](#features)
 

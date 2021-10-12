@@ -4,39 +4,44 @@
 <head>
     <title>Regular Expression Test</title>
     <style>
-        body, input, textarea {
+        body,
+        input,
+        textarea {
             font-family: var(--vscode-editor-font-family);
             font-weight: var(--vscode-editor-font-weight);
             font-size: var(--vscode-editor-font-size);
         }
 
         .input-box {
-            width: calc(100% - 10px);
-        }
-        .input-box.regex {
-            width: calc(100% - 90px);
+            width: 100%;
+            color: var(--vscode-input-foreground);
+            background-color: var(--vscode-input-background);
         }
 
-        .copy-button {
+        .button {
             width: 60px;
             display: inline-block;
-            border: 1px solid;
-            border-radius: 3px;
             text-align: center;
             padding: 3px;
             cursor: pointer;
+            color: var(--vscode-button-foreground);
+            background-color: var(--vscode-button-background);
+        }
+
+        .button:hover {
+            background-color: var(--vscode-button-hoverBackground);
         }
 
         .True {
-            color: lightgreen;
+            color: var(--vscode-testing-iconPassed);
         }
 
         .False {
-            color: red;
+            color: var(--vscode-testing-iconFailed);
         }
 
         .row {
-            margin-bottom: 10px;
+            margin: 10px;
         }
     </style>
 </head>
@@ -45,15 +50,24 @@
     <div>
         <div class="row">
             <label>Regular Expression: </label>
+            <div class="button" onclick="copyRegExp()">Copy</div>
+            <div class="button" onclick="pasteRegExp()">Paste</div>
+        </div>
+        <div class="row">
             <input id="regex" class="input-box regex" oninput="check()" />
-            <div class="copy-button" onclick="copyRegExp()">Copy</div>
         </div>
         <div class="row">
             <label>Content to test: </label>
+            <div class="button" onclick="copyContent()">Copy</div>
+            <div class="button" onclick="pasteContent()">Paste</div>
+        </div>
+        <div class="row">
             <textarea id="content" rows="5" class="input-box" oninput="check()"></textarea>
         </div>
         <div class="row">
             <label>Result: </label>
+        </div>
+        <div class="row">
             <div id="result"></div>
         </div>
     </div>
@@ -66,22 +80,53 @@
         const result = document.querySelector('#result');
 
         const check = () => {
-            vscode.setState({regex: regex.value, content: content.value});
-            try {
-                let pattern = new RegExp(regex.value, 'g');
-                let match = content.value.match(pattern);
-                result.innerHTML = match
-                    ? `<span class="True">True, match: <br>${match.join('<br>')}</span>`
-                    : '<span class="False">False</span>';
-            } catch (e) {
-                result.innerHTML = e.message;
+            vscode.setState({ regex: regex.value, content: content.value });
+            if (regex.value) {
+                try {
+                    let pattern = new RegExp(regex.value, 'g');
+                    if (content.value) {
+                        let match = content.value.match(pattern);
+                        result.innerHTML = match
+                            ? `<span class="True">True, match: <br>${match.join('<br>')}</span>`
+                            : '<span class="False">False</span>';
+                    } else {
+                        result.innerHTML = '';
+                    }
+                } catch (e) {
+                    result.innerHTML = e.message;
+                }
+            } else {
+                result.innerHTML = '';
             }
+
         };
 
         const copyRegExp = () => {
             if (regex.value) {
                 window.navigator.clipboard.writeText(regex.value);
             }
+        };
+
+        const pasteRegExp = () => {
+            window.navigator.clipboard.readText().then(text => {
+                if (text) {
+                    regex.value = text;
+                }
+            });
+        };
+
+        const copyContent = () => {
+            if (content.value) {
+                window.navigator.clipboard.writeText(content.value);
+            }
+        };
+
+        const pasteContent = () => {
+            let paste = window.navigator.clipboard.readText().then(text => {
+                if (text) {
+                    content.value = text;
+                }
+            });
         };
 
         window.addEventListener('load', event => {
