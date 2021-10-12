@@ -11,7 +11,20 @@
         }
 
         .input-box {
-            width: 100%;
+            width: calc(100% - 10px);
+        }
+        .input-box.regex {
+            width: calc(100% - 90px);
+        }
+
+        .copy-button {
+            width: 60px;
+            display: inline-block;
+            border: 1px solid;
+            border-radius: 3px;
+            text-align: center;
+            padding: 3px;
+            cursor: pointer;
         }
 
         .True {
@@ -32,7 +45,8 @@
     <div>
         <div class="row">
             <label>Regular Expression: </label>
-            <input id="regex" class="input-box" oninput="check()" />
+            <input id="regex" class="input-box regex" oninput="check()" />
+            <div class="copy-button" onclick="copyRegExp()">Copy</div>
         </div>
         <div class="row">
             <label>Content to test: </label>
@@ -61,6 +75,12 @@
                     : '<span class="False">False</span>';
             } catch (e) {
                 result.innerHTML = e.message;
+            }
+        };
+
+        const copyRegExp = () => {
+            if (regex.value) {
+                window.navigator.clipboard.writeText(regex.value);
             }
         };
 
