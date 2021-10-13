@@ -14,6 +14,7 @@ const handler = context => {
         if (data.alternative_translations) data.alternative_translations[0].alternative.forEach(i => message += `🔹 ${i.word_postproc} `);
         vscode.window.showInformationMessage(message);
     }).catch(error => {
+        console.log(error);
         vscode.window.showErrorMessage(error);
     });
 };

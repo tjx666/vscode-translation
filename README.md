@@ -5,7 +5,7 @@ This extension provides translation (based on Google Translation) support for Vi
 
 ## Features
 - Multiple languages translation support.
-- Words or sentences (support multiple lines, limit in 200 words each time) translation support.
+- Words or sentences (support multiple lines, limit in 5000 characters each time) translation support.
 - [Settings](#settings)
 - [Simple Translation](#simple-translation)
 - [Complete Translation](#complete-translation)

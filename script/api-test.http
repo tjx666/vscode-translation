@@ -1,6 +1,6 @@
-@q = free
+@q = support
 
-@param = ?client=gtx&dj=1&ie=utf8&oe=utf8&dt=t&dt=bd&dt=ex&dt=rm&dt=at&sl=auto&tl=ja&q=
+@param = ?client=dict-chrome-ex&dj=1&ie=utf8&oe=utf8&dt=t&dt=bd&dt=ex&dt=rm&dt=at&dt=md&dt=ss&sl=auto&tl=zh-CN&q=
 
 GET https://translate.googleapis.com/translate_a/single{{param}}{{q}}
 

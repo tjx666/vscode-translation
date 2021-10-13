@@ -19,6 +19,7 @@ const handler = (context, param) => {
     } else {
         fs.readFile(`${context.extensionPath}/src/webview/translation.html`, (error, content) => {
             if (error) {
+                console.log(error);
                 vscode.window.showErrorMessage(error.message);
                 return;
             }

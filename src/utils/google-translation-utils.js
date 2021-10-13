@@ -2,7 +2,7 @@ const https = require('https');
 
 const TRANSLATE_API = 'https://translate.googleapis.com/translate_a/single';
 const TRANSLATE_COMMON_PARAM =
-    'client=gtx'
+    'client=dict-chrome-ex'
     + '&dj=1'
     + '&ie=utf8'
     + '&oe=utf8'
@@ -11,7 +11,7 @@ const TRANSLATE_COMMON_PARAM =
 
 const TTS_API = 'https://translate.googleapis.com/translate_tts';
 const TTS_COMMON_PARAM =
-    'client=gtx'
+    'client=dict-chrome-ex'
     + '&ie=utf8'
     ;
 

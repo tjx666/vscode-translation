@@ -11,6 +11,7 @@ const handler = context => {
     } else {
         fs.readFile(`${context.extensionPath}/src/webview/regular-expression-test.html`, (error, content) => {
             if (error) {
+                console.log(error);
                 vscode.window.showErrorMessage(error.message);
                 return;
             }

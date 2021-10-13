@@ -13,8 +13,13 @@
 </head>
 
 <body>
-    <div>
+    <div id="app">
+        <div>
+            
+        </div>
+        <div>
 
+        </div>
     </div>
     <script src="plugin/vue.min.js"></script>
     <script src="common.js"></script>
@@ -23,10 +28,28 @@
         'use strict';
         const vscode = acquireVsCodeApi();
 
-        console.log(SOURCE_LANGUAGE);
+        let app = new Vue({
+            data: {
+                state: {
+                    sourceLang: 'auto',
+                    targetLang: 'en',
+                    source: '',
+                    target: '',
+                    result: null,
+                    history: [],
+                },
+            },
+            created() {
+                let preState = vscode.getState();
+                if (preState) this.state = preState;
+            },
+            methods: {
 
-        window.addEventListener('load', event => {
-            let preData = vscode.getState();
+            },
+        });
+
+        window.addEventListener('message', event => {
+            let msg = event.data;
 
         });
     </script>

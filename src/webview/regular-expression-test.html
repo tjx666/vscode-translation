@@ -89,7 +89,6 @@
             created() {
                 let preState = vscode.getState();
                 if (preState) this.state = preState;
-                this.checkAction();
             },
             watch: {
                 'state.regex'() {
@@ -110,9 +109,9 @@
                                 let resultHtml = '';
                                 if (match) {
                                     for (let i in match) {
-                                        resultHtml += `🔹 ${i}<br>`;
+                                        resultHtml += `🔹 ${htmlEscape(i)}<br>`;
                                     }
-                                    this.state.result = `<span class="True">⭕ True, match: </span><br>${htmlEscape(resultHtml)}`
+                                    this.state.result = `<span class="True">⭕ True, match: </span><br>${resultHtml}`
                                 } else {
                                     this.state.result = '<span class="False">❌ False</span>';
                                 }
