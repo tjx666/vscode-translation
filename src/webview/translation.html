@@ -15,10 +15,25 @@
 <body>
     <div id="app">
         <div>
-            
+
         </div>
         <div>
-
+            <div v-if="state.result" id="definitions" class="block">
+                <div class="title">Definitions</div>
+                <div class="list">
+                    <template v-for="(i, i_index) in state.result.definitions">
+                        <div :key="i.pos + i_index" class="definition">
+                            <div class="pos">{{i.pos}}</div>
+                            <template v-for="(j, j_index) in i.entry">
+                                <div :key="j.definition_id + j_index" class="item">
+                                    <div class="gloss">{{j.gloss}}</div>
+                                    <div class="example">{{j.example}}</div>
+                                </div>
+                            </template>
+                        </div>
+                    </template>
+                </div>
+            </div>
         </div>
     </div>
     <script src="plugin/vue.min.js"></script>
@@ -29,6 +44,7 @@
         const vscode = acquireVsCodeApi();
 
         let app = new Vue({
+            el: '#app',
             data: {
                 state: {
                     sourceLang: 'auto',
@@ -44,13 +60,56 @@
                 if (preState) this.state = preState;
             },
             methods: {
-
+                init(initState) {
+                    this.state.sourceLang = initState.sl;
+                    this.state.targetLang = initState.tl;
+                    this.state.source = initState.q;
+                    this.query();
+                },
+                query() {
+                    if (this.state.source) {
+                        if (this.state.source) {
+                            this.state.history.push(this.state.source);
+                        }
+                        vscode.postMessage({
+                            operation: 'getTranslate',
+                            parameter: {
+                                hl: this.state.targetLang,
+                                tl: this.state.targetLang,
+                                sl: this.state.sourceLang,
+                                q: this.state.source,
+                            },
+                        });
+                        vscode.setState(this.state);
+                    }
+                },
+                receiveMessage(message) {
+                    switch (message.operation) {
+                        case 'init': {
+                            this.init(message.parameter);
+                            break;
+                        }
+                        case 'query': {
+                            this.state.source = message.parameter.q;
+                            this.query();
+                            break;
+                        }
+                        case 'receiveTranslation': {
+                            this.state.result = message.parameter;
+                            
+                            break;
+                        }
+                        case 'receivePronunciation': {
+                            // TODO
+                            break;
+                        }
+                    }
+                }
             },
         });
 
         window.addEventListener('message', event => {
-            let msg = event.data;
-
+            app.receiveMessage(event.data);
         });
     </script>
 </body>

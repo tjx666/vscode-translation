@@ -100,7 +100,6 @@
             },
             methods: {
                 checkAction() {
-                    vscode.setState(this.state);
                     if (this.state.regex) {
                         try {
                             let pattern = new RegExp(this.state.regex, 'g');
@@ -124,6 +123,7 @@
                     } else {
                         this.state.result = '';
                     }
+                    vscode.setState(this.state);
                 },
                 copyAction(target) {
                     if (this.state[target]) {

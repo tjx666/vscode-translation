@@ -22,7 +22,7 @@ const TTS_COMMON_PARAM =
  */
 const getTranslate = param => {
     return new Promise((resolve, reject) => {
-        param.q = encodeURIComponent(param.q);
+        param.q = encodeURIComponent(param.q.replace(/\r\n/g, ' ').replace(/\n/g, ' '));
         let query = Object.keys(param).map(k => `&${k}=${param[k]}`).join('');
         let request = https.get(`${TRANSLATE_API}?${TRANSLATE_COMMON_PARAM}${query}`, response => {
             let buffer = '';

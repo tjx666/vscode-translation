@@ -3,7 +3,6 @@ const googleTranslateUtils = require('../utils/google-translation-utils.js');
 
 const handler = context => {
     let selection = vscode.window.activeTextEditor.document.getText(vscode.window.activeTextEditor.selection);
-    selection = selection.replace(/\r\n/g, ' ').replace(/\n/g, ' ');
     let config = vscode.workspace.getConfiguration('translation');
     googleTranslateUtils.getTranslate({
         sl: config.get('source-language'),
