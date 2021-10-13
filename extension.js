@@ -18,8 +18,8 @@ function activate(context) {
     };
 
     register('simpleTranslate', simpleTranslate.handler);
-    register('completeTranslate', completeTranslate.handler, {fromCommand: false});
-    register('translation', completeTranslate.handler, {fromCommand: true});
+    register('completeTranslate', completeTranslate.handler, { fromCommand: false });
+    register('translation', completeTranslate.handler, { fromCommand: true });
     register('regularExpressionTest', regularExpressionTest.handler);
 }
 

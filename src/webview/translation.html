@@ -14,15 +14,20 @@
 
 <body>
     <div>
-        Coming soon ...
+
     </div>
+    <script src="plugin/vue.min.js"></script>
+    <script src="common.js"></script>
+    <script src="language.js"></script>
     <script>
         'use strict';
         const vscode = acquireVsCodeApi();
 
+        console.log(SOURCE_LANGUAGE);
+
         window.addEventListener('load', event => {
             let preData = vscode.getState();
-            
+
         });
     </script>
 </body>

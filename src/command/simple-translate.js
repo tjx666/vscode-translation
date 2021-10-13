@@ -10,8 +10,8 @@ const handler = context => {
         tl: config.get('target-language'),
         q: selection,
     }).then(data => {
-        let message = `${selection} ⇨ ${data.sentences[0].trans} `;
-        if (data.alternative_translations) data.alternative_translations[0].alternative.forEach(i => message += ` ◇ ${i.word_postproc} `);
+        let message = `${selection} 💬 ${data.sentences[0].trans} `;
+        if (data.alternative_translations) data.alternative_translations[0].alternative.forEach(i => message += `🔹 ${i.word_postproc} `);
         vscode.window.showInformationMessage(message);
     }).catch(error => {
         vscode.window.showErrorMessage(error);

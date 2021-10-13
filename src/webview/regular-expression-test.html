@@ -47,95 +47,98 @@
 </head>
 
 <body>
-    <div>
+    <div id="app">
         <div class="row">
             <label>Regular Expression: </label>
-            <div class="button" onclick="copyRegExp()">Copy</div>
-            <div class="button" onclick="pasteRegExp()">Paste</div>
+            <div class="button" @click="copyAction('regex')">Copy</div>
+            <div class="button" @click="pasteAction('regex')">Paste</div>
         </div>
         <div class="row">
-            <input id="regex" class="input-box regex" oninput="check()" />
+            <input v-model="state.regex" class="input-box regex" />
         </div>
         <div class="row">
             <label>Content to test: </label>
-            <div class="button" onclick="copyContent()">Copy</div>
-            <div class="button" onclick="pasteContent()">Paste</div>
+            <div class="button" @click="copyAction('content')">Copy</div>
+            <div class="button" @click="pasteAction('content')">Paste</div>
         </div>
         <div class="row">
-            <textarea id="content" rows="5" class="input-box" oninput="check()"></textarea>
+            <textarea v-model="state.content" rows="5" class="input-box"></textarea>
         </div>
         <div class="row">
             <label>Result: </label>
         </div>
         <div class="row">
-            <div id="result"></div>
+            <div v-html="state.result"></div>
         </div>
     </div>
+    <script src="plugin/vue.min.js"></script>
+    <script src="common.js"></script>
     <script>
         'use strict';
         const vscode = acquireVsCodeApi();
 
-        const regex = document.querySelector('#regex');
-        const content = document.querySelector('#content');
-        const result = document.querySelector('#result');
-
-        const check = () => {
-            vscode.setState({ regex: regex.value, content: content.value });
-            if (regex.value) {
-                try {
-                    let pattern = new RegExp(regex.value, 'g');
-                    if (content.value) {
-                        let match = content.value.match(pattern);
-                        result.innerHTML = match
-                            ? `<span class="True">True, match: <br>${match.join('<br>')}</span>`
-                            : '<span class="False">False</span>';
+        let app = new Vue({
+            el: '#app',
+            data: {
+                state: {
+                    regex: '',
+                    content: '',
+                    result: '',
+                },
+            },
+            created() {
+                let preState = vscode.getState();
+                if (preState) this.state = preState;
+                this.checkAction();
+            },
+            watch: {
+                'state.regex'() {
+                    this.checkAction();
+                },
+                'state.content'() {
+                    this.checkAction();
+                },
+            },
+            methods: {
+                checkAction() {
+                    vscode.setState(this.state);
+                    if (this.state.regex) {
+                        try {
+                            let pattern = new RegExp(this.state.regex, 'g');
+                            if (this.state.content) {
+                                let match = this.state.content.match(pattern);
+                                let resultHtml = '';
+                                if (match) {
+                                    for (let i in match) {
+                                        resultHtml += `🔹 ${i}<br>`;
+                                    }
+                                    this.state.result = `<span class="True">⭕ True, match: </span><br>${htmlEscape(resultHtml)}`
+                                } else {
+                                    this.state.result = '<span class="False">❌ False</span>';
+                                }
+                            } else {
+                                this.state.result = '';
+                            }
+                        } catch (e) {
+                            this.state.result = `❗ ${htmlEscape(e.message)}`;
+                        }
                     } else {
-                        result.innerHTML = '';
+                        this.state.result = '';
                     }
-                } catch (e) {
-                    result.innerHTML = e.message;
-                }
-            } else {
-                result.innerHTML = '';
-            }
-
-        };
-
-        const copyRegExp = () => {
-            if (regex.value) {
-                window.navigator.clipboard.writeText(regex.value);
-            }
-        };
-
-        const pasteRegExp = () => {
-            window.navigator.clipboard.readText().then(text => {
-                if (text) {
-                    regex.value = text;
-                }
-            });
-        };
-
-        const copyContent = () => {
-            if (content.value) {
-                window.navigator.clipboard.writeText(content.value);
-            }
-        };
-
-        const pasteContent = () => {
-            let paste = window.navigator.clipboard.readText().then(text => {
-                if (text) {
-                    content.value = text;
-                }
-            });
-        };
-
-        window.addEventListener('load', event => {
-            let preData = vscode.getState();
-            if (preData) {
-                regex.value = preData.regex;
-                content.value = preData.content;
-                check();
-            }
+                },
+                copyAction(target) {
+                    if (this.state[target]) {
+                        window.navigator.clipboard.writeText(this.state[target]);
+                    }
+                },
+                pasteAction(target) {
+                    window.navigator.clipboard.readText().then(text => {
+                        if (text) {
+                            this.state[target] = text;
+                        }
+                    });
+                },
+            },
         });
     </script>
 </body>
