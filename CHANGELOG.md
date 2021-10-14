@@ -1,5 +1,8 @@
 # Change Log
 
+## 1.0.4
+- Add http proxy support.
+
 ## 1.0.2
 - Use vscode style UI for webview.
 

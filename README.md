@@ -6,6 +6,7 @@ This extension provides translation (based on Google Translation) support for Vi
 ## Features
 - Multiple languages translation support.
 - Words or sentences (support multiple lines, limit in 5000 characters each time) translation support.
+- HTTP proxy support.
 - [Settings](#settings)
 - [Simple Translation](#simple-translation)
 - [Complete Translation](#complete-translation) (Coming soon...)
@@ -20,7 +21,19 @@ This extension provides translation (based on Google Translation) support for Vi
   "translation.source-language": "auto",
 
   // Default target language for translation.
-  "translation.target-language": "en"
+  "translation.target-language": "en",
+
+  // URL for http proxy.
+  "translation.proxy-url": "http://127.0.0.1:1080",
+
+  // Controls whether used http proxy for translation.
+  "translation.enable-proxy": false,
+
+  // Controls whether used http proxy for getting ss.
+  "translation.enable-ss-proxy": false,
+
+  // URL for getting ss.
+  "translation.ss-url": "",
 }
 ```
 
