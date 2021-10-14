@@ -1,5 +1,5 @@
 const LANGUAGE = {
-    enum: [
+    "enum": [
         "zh-CN", "en", "zh-TW", "sq", "ar", "am", "az", "ga", "et",
         "eu", "be", "bg", "is", "pl", "bs", "fa", "af", "da", "de",
         "ru", "fr", "tl", "fi", "fy", "km", "ka", "gu", "kk", "ht",
@@ -12,7 +12,7 @@ const LANGUAGE = {
         "es", "iw", "el", "haw", "sd", "hu", "sn", "hy", "ig", "it",
         "yi", "hi", "su", "id", "jw", "yo", "vi"
     ],
-    enumDescriptions: [
+    "enumDescriptions": [
         "Chinese (Simple)", "English", "Chinese (Traditional)", "Albanian", "Arabic", "Amharic", "Azerbaijani", "Irish", "Estonian",
         "Basque", "Belarusian", "Bulgarian", "Icelandic", "Polish", "Bosnian", "Persian", "Afrikaans", "Danish", "German",
         "Russian", "French", "Filipino", "Finnish", "Frisian", "Khmer", "Georgian", "Gujarati", "Kazakh", "Haitian Creole",

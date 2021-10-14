@@ -38,9 +38,9 @@ const handler = (context, param) => {
             panel.onDidDispose(() => panel = null);
 
             panel.webview.html = webviewUtils.renderReources(context, panel, content.toString(), [
-                { src: 'plugin/vue.min.js', path: 'src/webview/plugin/vue.min.js' },
-                { src: 'common.js', path: 'src/webview/common.js' },
-                { src: 'language.js', path: 'src/webview/language.js' },
+                { src: 'js/vue3.js', path: 'src/webview/js/vue3.js' },
+                { src: 'js/common.js', path: 'src/webview/js/common.js' },
+                { src: 'js/language.js', path: 'src/webview/js/language.js' },
             ]);
             panel.webview.onDidReceiveMessage(message => {
                 switch (message.operation) {

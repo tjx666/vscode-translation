@@ -4,32 +4,10 @@
 <head>
     <title>Regular Expression Test</title>
     <style>
-        body,
-        input,
-        textarea {
+        * {
             font-family: var(--vscode-editor-font-family);
             font-weight: var(--vscode-editor-font-weight);
             font-size: var(--vscode-editor-font-size);
-        }
-
-        .input-box {
-            width: 100%;
-            color: var(--vscode-input-foreground);
-            background-color: var(--vscode-input-background);
-        }
-
-        .button {
-            width: 60px;
-            display: inline-block;
-            text-align: center;
-            padding: 3px;
-            cursor: pointer;
-            color: var(--vscode-button-foreground);
-            background-color: var(--vscode-button-background);
-        }
-
-        .button:hover {
-            background-color: var(--vscode-button-hoverBackground);
         }
 
         .True {
@@ -40,51 +18,67 @@
             color: var(--vscode-testing-iconFailed);
         }
 
-        .row {
-            margin: 10px;
+        .regularExpression,
+        .contentToTest {
+            margin-bottom: 10px;
+        }
+
+        .regularExpression_textField vscode-text-field,
+        .contentToTest_textArea vscode-text-area {
+            width: 100%;
+            margin-bottom: 5px;
+        }
+
+        .regularExpression_operation vscode-button:not(:last-child),
+        .contentToTest_operation vscode-button:not(:last-child) {
+            margin-right: 10px;
         }
     </style>
 </head>
 
 <body>
     <div id="app">
-        <div class="row">
-            <label>Regular Expression: </label>
-            <div class="button" @click="copyAction('regex')">Copy</div>
-            <div class="button" @click="pasteAction('regex')">Paste</div>
-        </div>
-        <div class="row">
-            <input v-model="state.regex" class="input-box regex" />
-        </div>
-        <div class="row">
-            <label>Content to test: </label>
-            <div class="button" @click="copyAction('content')">Copy</div>
-            <div class="button" @click="pasteAction('content')">Paste</div>
-        </div>
-        <div class="row">
-            <textarea v-model="state.content" rows="5" class="input-box"></textarea>
-        </div>
-        <div class="row">
-            <label>Result: </label>
-        </div>
-        <div class="row">
-            <div v-html="state.result"></div>
-        </div>
+        <form>
+            <div class="regularExpression">
+                <div class="regularExpression_textField">
+                    <vscode-text-field v-model="state.regex">Regular Expression: </vscode-text-field>
+                </div>
+                <div class="regularExpression_operation">
+                    <vscode-button @click="copyAction('regex')">Copy</vscode-button>
+                    <vscode-button @click="pasteAction('regex')">Paste</vscode-button>
+                </div>
+            </div>
+            <div class="contentToTest">
+                <div class="contentToTest_textArea">
+                    <vscode-text-area v-model="state.content" rows="5">Content to test: </vscode-text-area>
+                </div>
+                <div class="contentToTest_operation">
+                    <vscode-button @click="copyAction('content')">Copy</vscode-button>
+                    <vscode-button @click="pasteAction('content')">Paste</vscode-button>
+                </div>
+            </div>
+            <div>
+                <div>Result: </div>
+                <div v-html="state.result"></div>
+            </div>
+        </form>
     </div>
-    <script src="plugin/vue.min.js"></script>
-    <script src="common.js"></script>
+    <script type="module" src="vscode-webview-ui-toolkit"></script>
+    <script src="js/vue3.js"></script>
+    <script src="js/common.js"></script>
     <script>
         'use strict';
         const vscode = acquireVsCodeApi();
 
-        let app = new Vue({
-            el: '#app',
-            data: {
-                state: {
-                    regex: '',
-                    content: '',
-                    result: '',
-                },
+        let app = Vue.createApp({
+            data() {
+                return {
+                    state: {
+                        regex: '',
+                        content: '',
+                        result: '',
+                    },
+                };
             },
             created() {
                 let preState = vscode.getState();
@@ -107,8 +101,10 @@
                                 let match = this.state.content.match(pattern);
                                 let resultHtml = '';
                                 if (match) {
+                                    console.log(match);
                                     for (let i in match) {
-                                        resultHtml += `🔹 ${htmlEscape(i)}<br>`;
+                                       
+                                        resultHtml += `🔹 ${htmlEscape(match[i])}<br>`;
                                     }
                                     this.state.result = `<span class="True">⭕ True, match: </span><br>${resultHtml}`
                                 } else {
@@ -139,6 +135,8 @@
                 },
             },
         });
+        app.config.compilerOptions.isCustomElement = tag => tag.startsWith('vscode-');
+        let appInstance = app.mount('#app');
     </script>
 </body>
 

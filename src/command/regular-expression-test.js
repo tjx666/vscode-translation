@@ -21,8 +21,9 @@ const handler = context => {
                 localResourceRoots: [vscode.Uri.file(path.join(context.extensionPath))],
             });
             panel.webview.html = webviewUtils.renderReources(context, panel, content.toString(), [
-                { src: 'plugin/vue.min.js', path: 'src/webview/plugin/vue.min.js' },
-                { src: 'common.js', path: 'src/webview/common.js' },
+                { src: 'vscode-webview-ui-toolkit', path: 'node_modules/@vscode/webview-ui-toolkit/dist/toolkit.js' },
+                { src: 'js/vue3.js', path: 'src/webview/js/vue3.js' },
+                { src: 'js/common.js', path: 'src/webview/js/common.js' },
             ]);
             panel.onDidDispose(() => panel = null);
         });

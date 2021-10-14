@@ -8,7 +8,7 @@ This extension provides translation (based on Google Translation) support for Vi
 - Words or sentences (support multiple lines, limit in 5000 characters each time) translation support.
 - [Settings](#settings)
 - [Simple Translation](#simple-translation)
-- [Complete Translation](#complete-translation)
+- [Complete Translation](#complete-translation) (Coming soon...)
 - Extra
   - [Regular Expression Test](#regular-expression-test)
 

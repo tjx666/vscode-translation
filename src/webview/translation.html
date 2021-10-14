@@ -21,11 +21,11 @@
             <div v-if="state.result" id="definitions" class="block">
                 <div class="title">Definitions</div>
                 <div class="list">
-                    <template v-for="(i, i_index) in state.result.definitions">
-                        <div :key="i.pos + i_index" class="definition">
+                    <template v-for="(i, i_index) in state.result.definitions" :key="i.pos + i_index">
+                        <div class="definition">
                             <div class="pos">{{i.pos}}</div>
-                            <template v-for="(j, j_index) in i.entry">
-                                <div :key="j.definition_id + j_index" class="item">
+                            <template v-for="(j, j_index) in i.entry" :key="j.definition_id + j_index">
+                                <div class="item">
                                     <div class="gloss">{{j.gloss}}</div>
                                     <div class="example">{{j.example}}</div>
                                 </div>
@@ -36,24 +36,25 @@
             </div>
         </div>
     </div>
-    <script src="plugin/vue.min.js"></script>
-    <script src="common.js"></script>
-    <script src="language.js"></script>
+    <script src="js/vue3.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/language.js"></script>
     <script>
         'use strict';
         const vscode = acquireVsCodeApi();
 
-        let app = new Vue({
-            el: '#app',
-            data: {
-                state: {
-                    sourceLang: 'auto',
-                    targetLang: 'en',
-                    source: '',
-                    target: '',
-                    result: null,
-                    history: [],
-                },
+        let app = Vue.createApp({
+            data() {
+                return {
+                    state: {
+                        sourceLang: 'auto',
+                        targetLang: 'en',
+                        source: '',
+                        target: '',
+                        result: null,
+                        history: [],
+                    },
+                };
             },
             created() {
                 let preState = vscode.getState();
@@ -96,7 +97,7 @@
                         }
                         case 'receiveTranslation': {
                             this.state.result = message.parameter;
-                            
+
                             break;
                         }
                         case 'receivePronunciation': {
@@ -107,9 +108,11 @@
                 }
             },
         });
+        app.config.compilerOptions.isCustomElement = tag => tag.startsWith('vscode-');
+        let appInstance = app.mount('#app');
 
         window.addEventListener('message', event => {
-            app.receiveMessage(event.data);
+            appInstance.receiveMessage(event.data);
         });
     </script>
 </body>
