@@ -12,13 +12,13 @@ const path = require('path');
 const renderReources = (context, panel, content, array) => {
     let result = '' + content;
     [...[
-        { 
-            src: 'vscode-webview-ui-toolkit', 
-            path: 'node_modules/@vscode/webview-ui-toolkit/dist/toolkit.js' 
+        {
+            src: 'vscode-webview-ui-toolkit',
+            path: 'node_modules/@vscode/webview-ui-toolkit/dist/toolkit.js'
         },
-        { 
-            src: 'vscode-codicons', 
-            path: 'node_modules/@vscode/codicons/dist/codicon.css' 
+        {
+            src: 'vscode-codicons',
+            path: 'node_modules/@vscode/codicons/dist/codicon.css'
         },
     ], ...array].forEach(i => {
         let truePath = panel.webview.asWebviewUri(vscode.Uri.file(path.join(context.extensionPath, i.path)));
