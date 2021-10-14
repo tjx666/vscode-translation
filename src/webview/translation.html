@@ -13,6 +13,7 @@
 </head>
 
 <body>
+
     <div id="app">
         <div>
 
@@ -36,6 +37,7 @@
             </div>
         </div>
     </div>
+
     <script src="js/vue3.js"></script>
     <script src="js/common.js"></script>
     <script src="js/language.js"></script>
@@ -43,7 +45,7 @@
         'use strict';
         const vscode = acquireVsCodeApi();
 
-        let app = Vue.createApp({
+        const app = Vue.createApp({
             data() {
                 return {
                     state: {
@@ -109,7 +111,7 @@
             },
         });
         app.config.compilerOptions.isCustomElement = tag => tag.startsWith('vscode-');
-        let appInstance = app.mount('#app');
+        const appInstance = app.mount('#app');
 
         window.addEventListener('message', event => {
             appInstance.receiveMessage(event.data);

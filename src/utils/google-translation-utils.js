@@ -56,8 +56,7 @@ const getTts = param => {
             response.on('data', data => buffer += data);
             response.on('end', () => {
                 try {
-                    // todo
-                    let json = JSON.parse(buffer);
+                    // TODO
                     resolve(json);
                 } catch (error) {
                     reject(buffer);

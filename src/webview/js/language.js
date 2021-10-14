@@ -27,7 +27,7 @@ const LANGUAGE = {
     ]
 };
 
-let SOURCE_LANGUAGE = [];
+const SOURCE_LANGUAGE = [];
 LANGUAGE.enum.forEach((i, index) => {
     SOURCE_LANGUAGE.push({
         key: i,
@@ -35,7 +35,7 @@ LANGUAGE.enum.forEach((i, index) => {
     });
 });
 
-let TARGET_LANGUAGE = [];
+const TARGET_LANGUAGE = [];
 LANGUAGE.enum.forEach((i, index) => {
     if (index === 0) return;
     TARGET_LANGUAGE.push({

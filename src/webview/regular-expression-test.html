@@ -44,6 +44,7 @@
 </head>
 
 <body>
+
     <div id="app">
         <form>
             <div class="regularExpression">
@@ -78,6 +79,7 @@
             </div>
         </form>
     </div>
+
     <script type="module" src="vscode-webview-ui-toolkit"></script>
     <script src="js/vue3.js"></script>
     <script src="js/common.js"></script>
@@ -85,7 +87,7 @@
         'use strict';
         const vscode = acquireVsCodeApi();
 
-        let app = Vue.createApp({
+        const app = Vue.createApp({
             data() {
                 return {
                     state: {
@@ -154,7 +156,7 @@
             },
         });
         app.config.compilerOptions.isCustomElement = tag => tag.startsWith('vscode-');
-        let appInstance = app.mount('#app');
+        const appInstance = app.mount('#app');
     </script>
 </body>
 
