@@ -544,6 +544,7 @@
         "@vscode/test-electron": "^1.6.2"
     },
     "dependencies": {
+        "@vscode/codicons": "0.0.25",
         "@vscode/webview-ui-toolkit": "^0.8.2"
     }
 }

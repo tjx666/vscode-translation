@@ -3,11 +3,18 @@
 
 <head>
     <title>Regular Expression Test</title>
+    <link rel="stylesheet" href="vscode-codicons"/>
     <style>
         * {
             font-family: var(--vscode-editor-font-family);
             font-weight: var(--vscode-editor-font-weight);
             font-size: var(--vscode-editor-font-size);
+        }
+
+        .codicon[class*='codicon-'] {
+            font-size: var(--vscode-editor-font-size);
+            display: inline-block;
+            vertical-align: bottom;
         }
 
         .True {
@@ -44,8 +51,9 @@
                     <vscode-text-field v-model="state.regex">Regular Expression: </vscode-text-field>
                 </div>
                 <div class="regularExpression_operation">
-                    <vscode-button @click="copyAction('regex')">Copy</vscode-button>
-                    <vscode-button @click="pasteAction('regex')">Paste</vscode-button>
+                    <vscode-button @click="copyAction('regex')"><span class="codicon codicon-clippy"></span>&nbsp;Copy</vscode-button>
+                    <vscode-button @click="pasteAction('regex')"><span class="codicon codicon-clippy"></span>&nbsp;Paste</vscode-button>
+                    <vscode-button @click="clearAction('regex')"><span class="codicon codicon-trash"></span>&nbsp;Clear</vscode-button>
                 </div>
             </div>
             <div class="contentToTest">
@@ -53,8 +61,9 @@
                     <vscode-text-area v-model="state.content" rows="5">Content to test: </vscode-text-area>
                 </div>
                 <div class="contentToTest_operation">
-                    <vscode-button @click="copyAction('content')">Copy</vscode-button>
-                    <vscode-button @click="pasteAction('content')">Paste</vscode-button>
+                    <vscode-button @click="copyAction('content')"><span class="codicon codicon-clippy"></span>&nbsp;Copy</vscode-button>
+                    <vscode-button @click="pasteAction('content')"><span class="codicon codicon-clippy"></span>&nbsp;Paste</vscode-button>
+                    <vscode-button @click="clearAction('content')"><span class="codicon codicon-trash"></span>&nbsp;Clear</vscode-button>
                 </div>
             </div>
             <div>
@@ -104,17 +113,17 @@
                                     console.log(match);
                                     for (let i in match) {
                                        
-                                        resultHtml += `🔹 ${htmlEscape(match[i])}<br>`;
+                                        resultHtml += `<div><span class="codicon codicon-circle-filled"></span>&nbsp;${htmlEscape(match[i])}</div>`;
                                     }
-                                    this.state.result = `<span class="True">⭕ True, match: </span><br>${resultHtml}`
+                                    this.state.result = `<span class="True"><span class="codicon codicon-check"></span>&nbsp;True, match: </span>${resultHtml}`
                                 } else {
-                                    this.state.result = '<span class="False">❌ False</span>';
+                                    this.state.result = '<span class="False"><span class="codicon codicon-close"></span>&nbsp;False</span>';
                                 }
                             } else {
                                 this.state.result = '';
                             }
                         } catch (e) {
-                            this.state.result = `❗ ${htmlEscape(e.message)}`;
+                            this.state.result = `<span class="codicon codicon-alert"></span>&nbsp;${htmlEscape(e.message)}`;
                         }
                     } else {
                         this.state.result = '';
@@ -132,6 +141,9 @@
                             this.state[target] = text;
                         }
                     });
+                },
+                clearAction(target) {
+                    this.state[target] = '';
                 },
             },
         });
