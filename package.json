@@ -2,7 +2,7 @@
     "name": "vscode-translation",
     "displayName": "Translation",
     "description": "A translation tool for Visual Studio Code.",
-    "version": "1.0.5",
+    "version": "1.0.7",
     "publisher": "caiqichang",
     "engines": {
         "vscode": "^1.61.0"
@@ -31,7 +31,8 @@
         "onCommand:completeTranslate",
         "onCommand:translation",
         "onCommand:regularExpressionTest",
-        "onCommand:ss"
+        "onCommand:ss",
+        "onCommand:fileTemplate"
     ],
     "contributes": {
         "configuration": {
@@ -158,12 +159,12 @@
                 {
                     "command": "simpleTranslate",
                     "when": "editorHasSelection",
-                    "group": "0_translation@1"
+                    "group": "0_translation@0"
                 },
                 {
                     "command": "completeTranslate",
                     "when": "editorHasSelection",
-                    "group": "0_translation@2"
+                    "group": "0_translation@1"
                 }
             ]
         }
