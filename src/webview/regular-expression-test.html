@@ -4,19 +4,8 @@
 <head>
     <title>Regular Expression Test</title>
     <link rel="stylesheet" href="vscode-codicons" />
+    <link rel="stylesheet" href="css/common.css" />
     <style>
-        * {
-            font-family: var(--vscode-editor-font-family);
-            font-weight: var(--vscode-editor-font-weight);
-            font-size: var(--vscode-editor-font-size);
-        }
-
-        .codicon[class*='codicon-'] {
-            font-size: var(--vscode-editor-font-size);
-            display: inline-block;
-            vertical-align: bottom;
-        }
-
         .True {
             color: var(--vscode-testing-iconPassed);
         }
@@ -73,6 +62,7 @@
                             class="codicon codicon-trash"></span>&nbsp;Clear</vscode-button>
                 </div>
             </div>
+            <vscode-divider></vscode-divider>
             <div>
                 <div>Result: </div>
                 <div v-html="state.result"></div>

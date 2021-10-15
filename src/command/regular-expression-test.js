@@ -19,11 +19,9 @@ const handler = context => {
             panel = vscode.window.createWebviewPanel('regularExpressionTestPanel', 'Regular Expression Test', vscode.ViewColumn.Beside, {
                 enableScripts: true,
                 localResourceRoots: [vscode.Uri.file(path.join(context.extensionPath))],
+                enableFindWidget: true,
             });
-            panel.webview.html = webviewUtils.renderReources(context, panel, content.toString(), [
-                { src: 'js/vue3.js', path: 'src/webview/js/vue3.js' },
-                { src: 'js/common.js', path: 'src/webview/js/common.js' },
-            ]);
+            panel.webview.html = webviewUtils.renderReources(context, panel, content.toString(), []);
             panel.onDidDispose(() => panel = null);
         });
     }

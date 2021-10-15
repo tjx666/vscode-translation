@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.0.5
+- Add getting ss from URL.
+- Optimise packaging, reduce the size of extension.
+
 ## 1.0.4
 - Add http proxy support.
 

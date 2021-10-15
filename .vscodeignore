@@ -7,3 +7,8 @@ vsc-extension-quickstart.md
 **/jsconfig.json
 **/*.map
 **/.eslintrc.json
+
+node_modules
+!node_modules/@vscode/webview-ui-toolkit/dist/toolkit.min.js
+!node_modules/@vscode/codicons/dist/codicon.css
+!node_modules/@vscode/codicons/dist/codicon.ttf

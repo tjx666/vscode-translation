@@ -12,6 +12,7 @@ This extension provides translation (based on Google Translation) support for Vi
 - [Complete Translation](#complete-translation) (Coming soon...)
 - Extra
   - [Regular Expression Test](#regular-expression-test)
+  - Getting ss from URL.
 
 ## Usage
 ### Settings

@@ -8,6 +8,7 @@ const vscode = require('vscode');
 const simpleTranslate = require('./src/command/simple-translate.js');
 const completeTranslate = require('./src/command/complete-translate.js');
 const regularExpressionTest = require('./src/command/regular-expression-test.js');
+const ss = require('./src/command/ss.js');
 
 /**
  * @param {vscode.ExtensionContext} context
@@ -21,6 +22,7 @@ function activate(context) {
     register('completeTranslate', completeTranslate.handler, { fromCommand: false });
     register('translation', completeTranslate.handler, { fromCommand: true });
     register('regularExpressionTest', regularExpressionTest.handler);
+    register('ss', ss.handler);
 }
 
 // this method is called when your extension is deactivated

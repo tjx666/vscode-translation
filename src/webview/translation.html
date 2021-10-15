@@ -3,12 +3,10 @@
 
 <head>
     <title>Translation</title>
+    <link rel="stylesheet" href="vscode-codicons" />
+    <link rel="stylesheet" href="css/common.css" />
     <style>
-        body {
-            font-family: var(--vscode-editor-font-family);
-            font-weight: var(--vscode-editor-font-weight);
-            font-size: var(--vscode-editor-font-size);
-        }
+
     </style>
 </head>
 
@@ -38,6 +36,7 @@
         </div>
     </div>
 
+    <script type="module" src="vscode-webview-ui-toolkit"></script>
     <script src="js/vue3.js"></script>
     <script src="js/common.js"></script>
     <script src="js/language.js"></script>
@@ -107,7 +106,7 @@
                             break;
                         }
                     }
-                }
+                },
             },
         });
         app.config.compilerOptions.isCustomElement = tag => tag.startsWith('vscode-');

@@ -34,13 +34,15 @@ const handler = (context, param) => {
             panel = vscode.window.createWebviewPanel('translationPanel', 'Translation', vscode.ViewColumn.Beside, {
                 enableScripts: true,
                 localResourceRoots: [vscode.Uri.file(path.join(context.extensionPath))],
+                enableFindWidget: true,
             });
             panel.onDidDispose(() => panel = null);
 
             panel.webview.html = webviewUtils.renderReources(context, panel, content.toString(), [
-                { src: 'js/vue3.js', path: 'src/webview/js/vue3.js' },
-                { src: 'js/common.js', path: 'src/webview/js/common.js' },
-                { src: 'js/language.js', path: 'src/webview/js/language.js' },
+                {
+                    src: 'js/language.js',
+                    path: 'src/webview/js/language.js',
+                },
             ]);
             panel.webview.onDidReceiveMessage(message => {
                 switch (message.operation) {
