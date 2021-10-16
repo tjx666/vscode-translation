@@ -10,7 +10,7 @@
             margin: 5px 0px;
         }
 
-        .button {
+        .middle {
             margin: 5px;
             vertical-align: middle;
         }
@@ -38,12 +38,15 @@
     <div id="app">
         <div class="head" ref="head">
             <div>
-                <vscode-button class="button" @click="copySelectedAction()"><span
-                        class="codicon codicon-clippy"></span>&nbsp;Copy Selected</vscode-button>
-                <vscode-button class="button" @click="copyAllAction()"><span
-                        class="codicon codicon-clippy"></span>&nbsp;Copy All</vscode-button>
-                <vscode-button class="button" @click="refreshAction()"><span
-                        class="codicon codicon-refresh"></span>&nbsp;Refresh</vscode-button>
+                <vscode-button class="middle" @click="copySelectedAction()">
+                    <span class="codicon codicon-clippy"></span>&nbsp;Copy Selected
+                </vscode-button>
+                <vscode-button class="middle" @click="copyAllAction()">
+                    <span class="codicon codicon-clippy"></span>&nbsp;Copy All
+                </vscode-button>
+                <vscode-button class="middle" @click="refreshAction()">
+                    <span class="codicon codicon-refresh"></span>&nbsp;Refresh
+                </vscode-button>
                 <span v-if="!state.loading && state.list.length !== 0">{{state.list.length}} Items</span>
             </div>
             <vscode-divider></vscode-divider>
@@ -55,10 +58,12 @@
 
             <template v-for="(i, index) in state.list" :key="i.origin + index">
                 <div class="item">
-                    <vscode-checkbox :checked="i.checked" @change="checkAction(index, $event.target.checked)">
+                    <vscode-checkbox class="middle" :checked="i.checked"
+                        @change="checkAction(index, $event.target.checked)">
                     </vscode-checkbox>
-                    <vscode-button class="button" @click="copyAction(i)"><span
-                            class="codicon codicon-clippy"></span>&nbsp;Copy</vscode-button>
+                    <vscode-button class="middle" appearance="icon" @click="copyAction(i)" title="Copy">
+                        <span class="codicon codicon-clippy"></span>
+                    </vscode-button>
                     <span class="text">{{i.decode}}</span>
                 </div>
                 <vscode-divider></vscode-divider>

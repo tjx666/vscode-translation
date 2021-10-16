@@ -6,7 +6,70 @@
     <link rel="stylesheet" href="vscode-codicons" />
     <link rel="stylesheet" href="css/common.css" />
     <style>
+        .headLeft,
+        .headCenter,
+        .headRight {
+            display: inline-block;
+        }
 
+        .textArea {
+            width: 100%;
+        }
+
+        .headCenter {
+            width: 40px;
+            text-align: center;
+            vertical-align: top;
+        }
+
+        .headLeft,
+        .headRight {
+            width: calc(50% - 20px);
+            vertical-align: middle;
+        }
+
+        .headOperation {
+            margin: 5px 0px;
+        }
+
+        .history {
+            margin: 7px 0px 20px 0px;
+        }
+
+        .translate {
+            margin-bottom: 20px;
+        }
+
+        .langSelect {
+            width: 150px;
+        }
+
+        .historyPanel {
+            z-index: 3;
+            position: absolute;
+            margin-left: 20px;
+            border: 1px solid;
+            background-color: var(--vscode-editor-background);
+            min-width: 150px;
+            text-align: left;
+        }
+
+        .historyItem {
+            padding: 3px 5px;
+            cursor: pointer;
+        }
+
+        .historyItem:hover {
+            background-color: var(--vscode-button-background);
+        }
+
+        .operationButton {
+            margin-right: 5px;
+        }
+
+        .operationButton.first {
+            margin-left: 5px;
+        }
     </style>
 </head>
 
@@ -14,9 +77,92 @@
 
     <div id="app">
         <div>
+            <form>
+                <div class="headLeft">
+                    <div class="headOperation">
+                        <vscode-dropdown class="langSelect">
+                            <vscode-option v-for="(i, index) in sourceLangList" :key="i.key + index" :value="i.key"
+                                :title="i.label">{{i.label}}</vscode-option>
+                        </vscode-dropdown>
+                        <vscode-button class="operationButton first" appearance="icon" title="Copy">
+                            <span class="codicon codicon-repo-pull"></span>
+                        </vscode-button>
+                        <vscode-button class="operationButton" appearance="icon" title="Paste">
+                            <span class="codicon codicon-repo-push"></span>
+                        </vscode-button>
+                        <vscode-button class="operationButton" appearance="icon" title="Clear">
+                            <span class="codicon codicon-trash"></span>
+                        </vscode-button>
+                    </div>
+                    <div>
+                        <vscode-text-area class="textArea" rows="5" maxlength="5000"></vscode-text-area>
+                    </div>
+                    <div>
+                        <div>
+                            <vscode-button appearance="icon">
+                                <span class="codicon codicon-unmute"></span>
+                            </vscode-button>
+                        </div>
+                    </div>
+                </div>
 
+                <div class="headCenter">
+                    <div class="history">
+                        <vscode-button appearance="icon" title="History" @click="showHistory = true"
+                            @focusout="showHistory = false">
+                            <span class="codicon codicon-history"></span>
+                        </vscode-button>
+                        <div v-if="showHistory" class="historyPanel">
+                            <div class="historyItem">123</div>
+                            <div class="historyItem">456</div>
+                        </div>
+                    </div>
+                    <div class="translate">
+                        <vscode-button appearance="icon" title="Translate">
+                            <span class="codicon codicon-play"></span>
+                        </vscode-button>
+                    </div>
+                    <div>
+                        <vscode-button appearance="icon" title="Swap">
+                            <span class="codicon codicon-arrow-swap"></span>
+                        </vscode-button>
+                    </div>
+                </div>
+
+                <div class="headRight">
+                    <div class="headOperation">
+                        <vscode-dropdown class="langSelect">
+                            <vscode-option v-for="(i, index) in targetLangList" :key="i.key + index" :value="i.key"
+                                :title="i.label">{{i.label}}</vscode-option>
+                        </vscode-dropdown>
+                        <vscode-button class="operationButton first" appearance="icon" title="Copy">
+                            <span class="codicon codicon-repo-pull"></span>
+                        </vscode-button>
+                        <vscode-button class="operationButton" appearance="icon" title="Paste">
+                            <span class="codicon codicon-repo-push"></span>
+                        </vscode-button>
+                        <vscode-button class="operationButton" appearance="icon" title="Clear">
+                            <span class="codicon codicon-trash"></span>
+                        </vscode-button>
+                    </div>
+                    <div>
+                        <vscode-text-area class="textArea" rows="5" maxlength="5000"></vscode-text-area>
+                    </div>
+                    <div>
+                        <div>
+                            <vscode-button appearance="icon">
+                                <span class="codicon codicon-unmute"></span>
+                            </vscode-button>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
+        
+        <vscode-divider></vscode-divider>
+
         <div>
+            <vscode-progress-ring v-if="state.loading"></vscode-progress-ring>
             <div v-if="state.result" id="definitions" class="block">
                 <div class="title">Definitions</div>
                 <div class="list">
@@ -54,7 +200,11 @@
                         target: '',
                         result: null,
                         history: [],
+                        loading: false,
                     },
+                    sourceLangList: SOURCE_LANGUAGE,
+                    targetLangList: TARGET_LANGUAGE,
+                    showHistory: false,
                 };
             },
             created() {

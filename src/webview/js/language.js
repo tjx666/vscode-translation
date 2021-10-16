@@ -1,6 +1,6 @@
 const LANGUAGE = {
     "enum": [
-        "zh-CN", "en", "zh-TW", "sq", "ar", "am", "az", "ga", "et",
+        "auto", "zh-CN", "en", "zh-TW", "sq", "ar", "am", "az", "ga", "et",
         "eu", "be", "bg", "is", "pl", "bs", "fa", "af", "da", "de",
         "ru", "fr", "tl", "fi", "fy", "km", "ka", "gu", "kk", "ht",
         "ko", "ha", "nl", "ky", "gl", "ca", "cs", "kn", "co", "hr",
@@ -13,7 +13,7 @@ const LANGUAGE = {
         "yi", "hi", "su", "id", "jw", "yo", "vi"
     ],
     "enumDescriptions": [
-        "Chinese (Simple)", "English", "Chinese (Traditional)", "Albanian", "Arabic", "Amharic", "Azerbaijani", "Irish", "Estonian",
+        "Auto", "Chinese (Simple)", "English", "Chinese (Traditional)", "Albanian", "Arabic", "Amharic", "Azerbaijani", "Irish", "Estonian",
         "Basque", "Belarusian", "Bulgarian", "Icelandic", "Polish", "Bosnian", "Persian", "Afrikaans", "Danish", "German",
         "Russian", "French", "Filipino", "Finnish", "Frisian", "Khmer", "Georgian", "Gujarati", "Kazakh", "Haitian Creole",
         "Korean", "Hausa", "Dutch", "Kyrgyz", "Galician", "Catalan", "Czech", "Kannada", "Corsican", "Croatian",
@@ -29,10 +29,16 @@ const LANGUAGE = {
 
 const SOURCE_LANGUAGE = [];
 LANGUAGE.enum.forEach((i, index) => {
+    if (index === 0) return;
     SOURCE_LANGUAGE.push({
         key: i,
         label: LANGUAGE.enumDescriptions[index],
     });
+});
+SOURCE_LANGUAGE.sort((l, r) => l.label.localeCompare(r.label));
+SOURCE_LANGUAGE.unshift({
+    key: 'auto',
+    label: 'Auto',
 });
 
 const TARGET_LANGUAGE = [];
@@ -43,3 +49,4 @@ LANGUAGE.enum.forEach((i, index) => {
         label: LANGUAGE.enumDescriptions[index],
     });
 });
+TARGET_LANGUAGE.sort((l, r) => l.label.localeCompare(r.label));

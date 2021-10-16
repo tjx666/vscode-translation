@@ -14,20 +14,12 @@
             color: var(--vscode-testing-iconFailed);
         }
 
-        .regularExpression,
-        .contentToTest {
-            margin-bottom: 10px;
-        }
-
-        .regularExpression_textField vscode-text-field,
-        .contentToTest_textArea vscode-text-area {
+        .textArea {
             width: 100%;
-            margin-bottom: 5px;
         }
 
-        .regularExpression_operation vscode-button:not(:last-child),
-        .contentToTest_operation vscode-button:not(:last-child) {
-            margin-right: 10px;
+        .operationButton {
+            margin-right: 5px;
         }
     </style>
 </head>
@@ -38,28 +30,34 @@
         <form>
             <div class="regularExpression">
                 <div class="regularExpression_textField">
-                    <vscode-text-field v-model="state.regex">Regular Expression: </vscode-text-field>
+                    <vscode-text-field class="textArea" v-model="state.regex">Regular Expression: </vscode-text-field>
                 </div>
                 <div class="regularExpression_operation">
-                    <vscode-button @click="copyAction('regex')"><span class="codicon codicon-clippy"></span>&nbsp;Copy
+                    <vscode-button class="operationButton" appearance="icon" @click="copyAction('regex')" title="Copy">
+                        <span class="codicon codicon-repo-pull"></span>
                     </vscode-button>
-                    <vscode-button @click="pasteAction('regex')"><span class="codicon codicon-clippy"></span>&nbsp;Paste
+                    <vscode-button class="operationButton" appearance="icon" @click="pasteAction('regex')" title="Paste">
+                        <span class="codicon codicon-repo-push"></span>
                     </vscode-button>
-                    <vscode-button @click="clearAction('regex')"><span class="codicon codicon-trash"></span>&nbsp;Clear
+                    <vscode-button class="operationButton" appearance="icon" @click="clearAction('regex')" title="Clear">
+                        <span class="codicon codicon-trash"></span>
                     </vscode-button>
                 </div>
             </div>
             <div class="contentToTest">
                 <div class="contentToTest_textArea">
-                    <vscode-text-area v-model="state.content" rows="5">Content to test: </vscode-text-area>
+                    <vscode-text-area class="textArea" v-model="state.content" rows="5">Content to test: </vscode-text-area>
                 </div>
                 <div class="contentToTest_operation">
-                    <vscode-button @click="copyAction('content')"><span class="codicon codicon-clippy"></span>&nbsp;Copy
+                    <vscode-button class="operationButton" appearance="icon" @click="copyAction('content')" title="Copy">
+                        <span class="codicon codicon-repo-pull"></span>
                     </vscode-button>
-                    <vscode-button @click="pasteAction('content')"><span
-                            class="codicon codicon-clippy"></span>&nbsp;Paste</vscode-button>
-                    <vscode-button @click="clearAction('content')"><span
-                            class="codicon codicon-trash"></span>&nbsp;Clear</vscode-button>
+                    <vscode-button class="operationButton" appearance="icon" @click="pasteAction('content')" title="Paste">
+                        <span class="codicon codicon-repo-push"></span>
+                    </vscode-button>
+                    <vscode-button class="operationButton" appearance="icon" @click="clearAction('content')" title="Clear">
+                        <span class="codicon codicon-trash"></span>
+                    </vscode-button>
                 </div>
             </div>
             <vscode-divider></vscode-divider>

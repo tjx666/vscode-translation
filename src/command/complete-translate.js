@@ -3,6 +3,8 @@ const fs = require('fs');
 const path = require('path');
 const webviewUtils = require('../utils/webview-utils.js');
 const googleTranslateUtils = require('../utils/google-translation-utils.js');
+const { URL } = require('url');
+const child_process = require('child_process');
 
 let panel = null;
 
@@ -59,7 +61,18 @@ const handler = (context, param) => {
                         break;
                     }
                     case 'getTts': {
-                        // TODO
+                        googleTranslateUtils.getTts(message.parameter).then(data => {
+                            let path = `${context.extensionPath}/sound`;
+                            fs.mkdirSync(path, {
+                                recursive: true,
+                                mode: 0o777
+                            });
+                            let file = `${path}/tts.mp3`
+                            fs.writeFileSync(file, data, {
+                                mode: 0o777,
+                            });
+                            child_process.exec(`ffplay -nodisp -autoexit "${file}"`);
+                        });
                         break;
                     }
                 }

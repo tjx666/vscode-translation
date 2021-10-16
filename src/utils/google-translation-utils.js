@@ -43,10 +43,9 @@ const getTranslate = param => {
 const getTts = param => {
     return new Promise((resolve, reject) => {
         param.q = encodeURIComponent(param.q.replace(/\r\n/g, ' ').replace(/\n/g, ' '));
-        let query = Object.keys(param).map(k => `&${k}=${param[k]}`).join();
-
+        let query = Object.keys(param).map(k => `&${k}=${param[k]}`).join('');
         httpProxy.doGet(`${TTS_API}?${TTS_COMMON_PARAM}${query}`, getEnableProxy()).then(data => {
-            resolve(data); // TODO
+            resolve(data);
         }).catch(error => reject(error));
     });
 };

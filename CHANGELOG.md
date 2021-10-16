@@ -1,5 +1,8 @@
 # Change Log
 
+## 1.0.8
+- Optimise UI.
+
 ## 1.0.7
 - Fix ss.
 

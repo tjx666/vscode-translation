@@ -3,6 +3,13 @@ const https = require('https');
 const { URL } = require('url');
 const vscode = require('vscode');
 
+const handleResponse = (response, resolve, reject) => {
+    let chunks = [];
+    response.on('data', data => chunks.push(data));
+    response.on('end', () => resolve(Buffer.concat(chunks)));
+    response.on('error', error => reject(error));
+};
+
 /**
  * http proxy for get request.
  * @param {*} api URL of request
@@ -27,10 +34,7 @@ const doGet = (api, enableProxy) => {
                     method: 'GET',
                     socket,
                 }, response => {
-                    let buffer = '';
-                    response.on('data', data => buffer += data);
-                    response.on('end', () => resolve(buffer));
-                    response.on('error', error => reject(error));
+                    handleResponse(response, resolve, reject);
                 });
                 requestKeep.on('error', error => reject(error));
                 requestKeep.end();
@@ -41,10 +45,7 @@ const doGet = (api, enableProxy) => {
             let requestKeep = apiClient.request(apiUrl.href, {
                 method: 'GET',
             }, response => {
-                let buffer = '';
-                response.on('data', data => buffer += data);
-                response.on('end', () => resolve(buffer));
-                response.on('error', error => reject(error));
+                handleResponse(response, resolve, reject);
             });
             requestKeep.on('error', error => reject(error));
             requestKeep.end();
