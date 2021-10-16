@@ -101,7 +101,7 @@
                     ]
                 },
                 "translation.enable-proxy": {
-                    "description": "Controls whether used http proxy for translation.",
+                    "description": "Controls whether to use http proxy for translation.",
                     "type": "boolean",
                     "default": false
                 },
@@ -110,15 +110,20 @@
                     "type": "string",
                     "default": "http://127.0.0.1:1080"
                 },
-                "translation.enable-ss-proxy": {
-                    "description": "Controls whether used http proxy for getting ss.",
+                "translation.ss-enable-proxy": {
+                    "description": "Controls whether to use http proxy for getting ss.",
                     "type": "boolean",
                     "default": false
                 },
-                "translation.ss-url": {
-                    "description": "URL for getting ss.",
-                    "type": "string",
-                    "default": ""
+                "translation.ss-enable-base64decode": {
+                    "description": "Controls whether to decode ss result (base64).",
+                    "type": "boolean",
+                    "default": false
+                },
+                "translation.ss-urls": {
+                    "description": "URLs array for getting ss.",
+                    "type": "array",
+                    "default": []
                 }
             }
         },

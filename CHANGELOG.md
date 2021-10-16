@@ -1,5 +1,8 @@
 # Change Log
 
+## 1.0.7
+- Fix ss.
+
 ## 1.0.5
 - Add getting ss from URL.
 - Optimise packaging, reduce the size of extension.

@@ -24,17 +24,20 @@ This extension provides translation (based on Google Translation) support for Vi
   // Default target language for translation.
   "translation.target-language": "en",
 
+  // Controls whether to use http proxy for translation.
+  "translation.enable-proxy": false,
+
   // URL for http proxy.
   "translation.proxy-url": "http://127.0.0.1:1080",
 
-  // Controls whether used http proxy for translation.
-  "translation.enable-proxy": false,
+  // Controls whether to decode ss result (base64).
+  "translation.ss-enable-base64decode": false,
 
-  // Controls whether used http proxy for getting ss.
-  "translation.enable-ss-proxy": false,
+  // Controls whether to use http proxy for getting ss.
+  "translation.ss-enable-proxy": false,
 
-  // URL for getting ss.
-  "translation.ss-url": "",
+  // URLs array for getting ss.
+  "translation.ss-urls": [],
 }
 ```
 

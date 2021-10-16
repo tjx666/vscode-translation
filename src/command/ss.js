@@ -29,30 +29,41 @@ const handler = context => {
                 switch (message.operation) {
                     case 'query': {
                         let config = vscode.workspace.getConfiguration('translation');
+                        let urls = config.get('ss-urls')
+                        let enableProxy = config.get('ss-enable-proxy');
+                        let enableDecode = config.get('ss-enable-base64decode');
 
-                        httpProxy.doGet(config.get('ss-url'), config.get('enable-ss-proxy')).then(data => {
+                        let promises = [];
+                        urls.forEach(i => {
+                            promises.push(httpProxy.doGet(i, enableProxy));
+                        });
 
-                            let arr = data.match(/ss:\/\/.+/g);
-                            let target = [];
-                            arr.forEach(i => {
-                                let t = i.trim();
-                                target.push({
-                                    checked: false,
-                                    origin: t,
-                                    decode: decodeURIComponent(t),
+                        let result = [];
+                        Promise.all(promises).then(allData => {
+                            allData.forEach(data => {
+                                let raw = enableDecode ? Buffer.from(data, 'base64').toString() : data;
+                                let arr = raw.match(/ss:\/\/.+/g);
+                                arr.forEach(i => {
+                                    let t = i.trim();
+                                    result.push({
+                                        checked: false,
+                                        origin: t,
+                                        decode: decodeURIComponent(t),
+                                    });
                                 });
                             });
 
                             panel.webview.postMessage({
                                 operation: 'result',
                                 parameter: {
-                                    list: target,
+                                    list: result,
                                 },
                             });
                         }).catch(error => {
                             console.log(error);
                             vscode.window.showErrorMessage(error.message)
                         });
+
                         break;
                     }
                 }
