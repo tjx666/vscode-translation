@@ -3,7 +3,7 @@ const vscode = require('vscode');
 
 const TRANSLATE_API = 'https://translate.googleapis.com/translate_a/single';
 const TRANSLATE_COMMON_PARAM =
-    'client=dict-chrome-ex'
+    'client=gtx'
     + '&dj=1'
     + '&ie=utf8'
     + '&oe=utf8'
@@ -12,7 +12,7 @@ const TRANSLATE_COMMON_PARAM =
 
 const TTS_API = 'https://translate.googleapis.com/translate_tts';
 const TTS_COMMON_PARAM =
-    'client=dict-chrome-ex'
+    'client=gtx'
     + '&ie=utf8'
     ;
 

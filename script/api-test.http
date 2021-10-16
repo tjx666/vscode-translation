@@ -1,8 +1,8 @@
-@q = support
+@q = hello%20world,%20i%20am%20mike
 
 @param = ?client=dict-chrome-ex&dj=1&ie=utf8&oe=utf8&dt=t&dt=bd&dt=ex&dt=rm&dt=at&dt=md&dt=ss&sl=auto&tl=zh-CN&q=
 
-GET https://translate.googleapis.com/translate_tts{{param}}{{q}}
+GET https://translate.googleapis.com/translate_a/single{{param}}{{q}}
 
 ###
 

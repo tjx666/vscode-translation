@@ -2,6 +2,7 @@
 
 ## 1.0.8
 - Optimise UI.
+- Add pronunciation support.
 
 ## 1.0.7
 - Fix ss.

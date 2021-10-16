@@ -41,7 +41,7 @@ const handler = context => {
                         let result = [];
                         Promise.all(promises).then(allData => {
                             allData.forEach(data => {
-                                let raw = enableDecode ? Buffer.from(data, 'base64').toString() : data;
+                                let raw = enableDecode ? Buffer.from(data.toString(), 'base64').toString() : data.toString();
                                 let arr = raw.match(/ss:\/\/.+/g);
                                 arr.forEach(i => {
                                     let t = i.trim();

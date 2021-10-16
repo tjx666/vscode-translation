@@ -17,15 +17,15 @@
         }
 
         .headCenter {
-            width: 40px;
+            width: 30px;
             text-align: center;
             vertical-align: top;
         }
 
         .headLeft,
         .headRight {
-            width: calc(50% - 20px);
-            vertical-align: middle;
+            width: calc(50% - 15px);
+            vertical-align: top;
         }
 
         .headOperation {
@@ -42,6 +42,7 @@
 
         .langSelect {
             width: 150px;
+            margin-right: 10px;
         }
 
         .historyPanel {
@@ -50,8 +51,11 @@
             margin-left: 20px;
             border: 1px solid;
             background-color: var(--vscode-editor-background);
-            min-width: 150px;
+            width: 200px;
+            height: 300px;
             text-align: left;
+            overflow-x: hidden;
+            overflow-y: auto;
         }
 
         .historyItem {
@@ -67,8 +71,25 @@
             margin-right: 5px;
         }
 
-        .operationButton.first {
-            margin-left: 5px;
+        .operationGroup {
+            display: inline-block;
+        }
+
+        .pronunceButton,
+        .pronunce {
+            vertical-align: middle;
+        }
+
+        .pronunceButton {
+            margin-right: 5px;
+        }
+
+        .pronunce.withSrc {
+            margin-right: 5px;
+        }
+
+        .pronunceSourceLang {
+            color: var(--vscode-gitDecoration-addedResourceForeground);
         }
     </style>
 </head>
@@ -80,28 +101,37 @@
             <form>
                 <div class="headLeft">
                     <div class="headOperation">
-                        <vscode-dropdown class="langSelect">
+                        <vscode-dropdown class="langSelect" v-model="state.sourceLang"
+                            @change="sourceLangChange($event.target.value)">
                             <vscode-option v-for="(i, index) in sourceLangList" :key="i.key + index" :value="i.key"
                                 :title="i.label">{{i.label}}</vscode-option>
                         </vscode-dropdown>
-                        <vscode-button class="operationButton first" appearance="icon" title="Copy">
-                            <span class="codicon codicon-repo-pull"></span>
-                        </vscode-button>
-                        <vscode-button class="operationButton" appearance="icon" title="Paste">
-                            <span class="codicon codicon-repo-push"></span>
-                        </vscode-button>
-                        <vscode-button class="operationButton" appearance="icon" title="Clear">
-                            <span class="codicon codicon-trash"></span>
-                        </vscode-button>
+                        <div class="operationGroup">
+                            <vscode-button class="operationButton first" appearance="icon" title="Copy"
+                                @click="copyAction('source')">
+                                <span class="codicon codicon-repo-pull"></span>
+                            </vscode-button>
+                            <vscode-button class="operationButton" appearance="icon" title="Paste"
+                                @click="pasteAction('source')">
+                                <span class="codicon codicon-repo-push"></span>
+                            </vscode-button>
+                            <vscode-button class="operationButton" appearance="icon" title="Clear"
+                                @click="clearAction('source')">
+                                <span class="codicon codicon-trash"></span>
+                            </vscode-button>
+                        </div>
                     </div>
                     <div>
-                        <vscode-text-area class="textArea" rows="5" maxlength="5000"></vscode-text-area>
+                        <vscode-text-area v-model="state.source" class="textArea" rows="5" maxlength="5000">
+                        </vscode-text-area>
                     </div>
                     <div>
                         <div>
-                            <vscode-button appearance="icon">
+                            <vscode-button class="pronunceButton" appearance="icon" @click="pronunciation('source')">
                                 <span class="codicon codicon-unmute"></span>
                             </vscode-button>
+                            <span class="pronunce withSrc">{{sourcePronunce}}</span>
+                            <span class="pronunceSourceLang">{{pronunceSourceLang}}</span>
                         </div>
                     </div>
                 </div>
@@ -109,21 +139,21 @@
                 <div class="headCenter">
                     <div class="history">
                         <vscode-button appearance="icon" title="History" @click="showHistory = true"
-                            @focusout="showHistory = false">
+                            @focusout="hideHistory()">
                             <span class="codicon codicon-history"></span>
                         </vscode-button>
                         <div v-if="showHistory" class="historyPanel">
-                            <div class="historyItem">123</div>
-                            <div class="historyItem">456</div>
+                            <div v-for="(i, index) in state.history" :key="i + index" class="historyItem" :title="i"
+                                @click="historySelect(i)">{{i}}</div>
                         </div>
                     </div>
                     <div class="translate">
-                        <vscode-button appearance="icon" title="Translate">
+                        <vscode-button appearance="icon" title="Translate" @click="query()">
                             <span class="codicon codicon-play"></span>
                         </vscode-button>
                     </div>
                     <div>
-                        <vscode-button appearance="icon" title="Swap">
+                        <vscode-button appearance="icon" title="Swap" @click="swapAction()">
                             <span class="codicon codicon-arrow-swap"></span>
                         </vscode-button>
                     </div>
@@ -131,34 +161,42 @@
 
                 <div class="headRight">
                     <div class="headOperation">
-                        <vscode-dropdown class="langSelect">
+                        <vscode-dropdown class="langSelect" v-model="state.targetLang"
+                            @change="targetLangChange($event.target.value)">
                             <vscode-option v-for="(i, index) in targetLangList" :key="i.key + index" :value="i.key"
                                 :title="i.label">{{i.label}}</vscode-option>
                         </vscode-dropdown>
-                        <vscode-button class="operationButton first" appearance="icon" title="Copy">
-                            <span class="codicon codicon-repo-pull"></span>
-                        </vscode-button>
-                        <vscode-button class="operationButton" appearance="icon" title="Paste">
-                            <span class="codicon codicon-repo-push"></span>
-                        </vscode-button>
-                        <vscode-button class="operationButton" appearance="icon" title="Clear">
-                            <span class="codicon codicon-trash"></span>
-                        </vscode-button>
+                        <div class="operationGroup">
+                            <vscode-button class="operationButton first" appearance="icon" title="Copy"
+                                @click="copyAction('target')">
+                                <span class="codicon codicon-repo-pull"></span>
+                            </vscode-button>
+                            <vscode-button class="operationButton" appearance="icon" title="Paste"
+                                @click="pasteAction('target')">
+                                <span class="codicon codicon-repo-push"></span>
+                            </vscode-button>
+                            <vscode-button class="operationButton" appearance="icon" title="Clear"
+                                @click="clearAction('target')">
+                                <span class="codicon codicon-trash"></span>
+                            </vscode-button>
+                        </div>
                     </div>
                     <div>
-                        <vscode-text-area class="textArea" rows="5" maxlength="5000"></vscode-text-area>
+                        <vscode-text-area v-model="state.target" class="textArea" rows="5" maxlength="5000">
+                        </vscode-text-area>
                     </div>
                     <div>
                         <div>
-                            <vscode-button appearance="icon">
+                            <vscode-button class="pronunceButton" appearance="icon" @click="pronunciation('target')">
                                 <span class="codicon codicon-unmute"></span>
                             </vscode-button>
+                            <span class="pronunce">{{targetPronounce}}</span>
                         </div>
                     </div>
                 </div>
             </form>
         </div>
-        
+
         <vscode-divider></vscode-divider>
 
         <div>
@@ -196,11 +234,12 @@
                     state: {
                         sourceLang: 'auto',
                         targetLang: 'en',
-                        source: '',
-                        target: '',
+                        source: null,
+                        target: null,
                         result: null,
                         history: [],
                         loading: false,
+                        temp: null,
                     },
                     sourceLangList: SOURCE_LANGUAGE,
                     targetLangList: TARGET_LANGUAGE,
@@ -208,21 +247,123 @@
                 };
             },
             created() {
-                let preState = vscode.getState();
-                if (preState) this.state = preState;
+                setTimeout(() => {
+                    let preState = vscode.getState();
+                    if (preState) this.state = preState;
+                }, 100);
+            },
+            computed: {
+                sourcePronunce() {
+                    return this.state.result ?
+                        this.state.result.sentences[1] ?
+                            this.state.result.sentences[1].src_translit : '' : '';
+                },
+                targetPronounce() {
+                    return this.state.result ?
+                        this.state.result.sentences[1] ?
+                            this.state.result.sentences[1].translit : '' : '';
+                },
+                pronunceSourceLang() {
+                    if (!this.state.result) {
+                        return '';
+                    }
+                    for (let i in this.sourceLangList) {
+                        if (this.sourceLangList[i].key === this.state.result.src) {
+                            return `(${this.sourceLangList[i].label})`;
+                        }
+                    }
+                    return '';
+                },
+            },
+            watch: {
+                'state.source'() {
+                    this.setState();
+                },
+                'state.target'() {
+                    this.setState();
+                },
             },
             methods: {
+                setState() {
+                    vscode.setState(this.state);
+                },
+                sourceLangChange(value) {
+                    this.state.sourceLang = value;
+                    this.setState();
+                },
+                targetLangChange(value) {
+                    this.state.targetLang = value;
+                    this.setState();
+                },
+                hideHistory() {
+                    setTimeout(() => this.showHistory = false, 200);
+                },
+                copyAction(target) {
+                    if (this.state[target]) {
+                        window.navigator.clipboard.writeText(this.state[target]);
+                    }
+                },
+                pasteAction(target) {
+                    window.navigator.clipboard.readText().then(text => {
+                        if (text) {
+                            this.state[target] = text;
+                        }
+                    });
+                },
+                historySelect(text) {
+                    this.state.source = text;
+                    this.query();
+                },
+                swapAction() {
+                    let t = this.state.source;
+                    this.state.source = this.state.target;
+                    this.state.target = t;
+                    this.query();
+                },
+                pronunciation(type) {
+                    if (this.state.temp) {
+                        switch (type) {
+                            case 'source': {
+                                vscode.postMessage({
+                                    operation: 'getTts',
+                                    parameter: {
+                                        sl: this.state.temp.sourceLang,
+                                        tl: this.state.temp.sourceLang,
+                                        q: this.state.temp.source,
+                                    },
+                                });
+                                break;
+                            }
+                            case 'target': {
+                                vscode.postMessage({
+                                    operation: 'getTts',
+                                    parameter: {
+                                        sl: this.state.temp.targetLang,
+                                        tl: this.state.temp.targetLang,
+                                        q: this.state.temp.target,
+                                    },
+                                });
+                                break;
+                            }
+                        }
+                    }
+                },
+                clearAction(target) {
+                    this.state[target] = null;
+                },
                 init(initState) {
                     this.state.sourceLang = initState.sl;
                     this.state.targetLang = initState.tl;
                     this.state.source = initState.q;
+                    this.setState();
                     this.query();
                 },
                 query() {
                     if (this.state.source) {
-                        if (this.state.source) {
-                            this.state.history.push(this.state.source);
-                        }
+                        this.state.target = null;
+                        this.state.result = null;
+                        this.state.loading = true;
+                        this.state.history.push(this.state.source);
                         vscode.postMessage({
                             operation: 'getTranslate',
                             parameter: {
@@ -232,7 +373,7 @@
                                 q: this.state.source,
                             },
                         });
-                        vscode.setState(this.state);
+                        this.setState();
                     }
                 },
                 receiveMessage(message) {
@@ -248,11 +389,15 @@
                         }
                         case 'receiveTranslation': {
                             this.state.result = message.parameter;
-
-                            break;
-                        }
-                        case 'receivePronunciation': {
-                            // TODO
+                            this.state.target = message.parameter.sentences[0].trans;
+                            this.state.temp = {
+                                source: this.state.result.sentences[0].orig,
+                                target: this.state.result.sentences[0].trans,
+                                sourceLang: this.state.result.src,
+                                targetLang: this.state.targetLang,
+                            };
+                            this.state.loading = false;
+                            this.setState();
                             break;
                         }
                     }

@@ -1,12 +1,12 @@
 # vscode-translation
-This extension provides translation (based on [Google Translation](https://translate.google.com/)) support for Visual Studio Code.
+This extension provides translation (based on [Google Translation](https://translate.google.com)) support for Visual Studio Code.
 
 [Get from Marketplace](https://marketplace.visualstudio.com/items?itemName=caiqichang.vscode-translation)
 
 ## Features
 - Multiple languages translation support.
-- Words or sentences (support multiple lines, limit in 5000 characters each time) translation support.
-- Pronunciation Support ([FFmpeg](https://www.ffmpeg.org/) is required).
+- Words or one sentence (support multiple lines, limit in 200 characters each time) translation support.
+- Pronunciation Support ([FFmpeg](https://ffmpeg.org) is required).
 - HTTP proxy support.
 - [Settings](#settings)
 - [Simple Translation](#simple-translation)
