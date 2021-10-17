@@ -21,6 +21,10 @@
         .operationButton {
             margin-right: 5px;
         }
+
+        .resultIcon {
+            margin-right: 5px;
+        }
     </style>
 </head>
 
@@ -36,26 +40,32 @@
                     <vscode-button class="operationButton" appearance="icon" @click="copyAction('regex')" title="Copy">
                         <span class="codicon codicon-repo-pull"></span>
                     </vscode-button>
-                    <vscode-button class="operationButton" appearance="icon" @click="pasteAction('regex')" title="Paste">
+                    <vscode-button class="operationButton" appearance="icon" @click="pasteAction('regex')"
+                        title="Paste">
                         <span class="codicon codicon-repo-push"></span>
                     </vscode-button>
-                    <vscode-button class="operationButton" appearance="icon" @click="clearAction('regex')" title="Clear">
+                    <vscode-button class="operationButton" appearance="icon" @click="clearAction('regex')"
+                        title="Clear">
                         <span class="codicon codicon-trash"></span>
                     </vscode-button>
                 </div>
             </div>
             <div class="contentToTest">
                 <div class="contentToTest_textArea">
-                    <vscode-text-area class="textArea" v-model="state.content" rows="5">Content to test: </vscode-text-area>
+                    <vscode-text-area class="textArea" v-model="state.content" rows="5">Content to test:
+                    </vscode-text-area>
                 </div>
                 <div class="contentToTest_operation">
-                    <vscode-button class="operationButton" appearance="icon" @click="copyAction('content')" title="Copy">
+                    <vscode-button class="operationButton" appearance="icon" @click="copyAction('content')"
+                        title="Copy">
                         <span class="codicon codicon-repo-pull"></span>
                     </vscode-button>
-                    <vscode-button class="operationButton" appearance="icon" @click="pasteAction('content')" title="Paste">
+                    <vscode-button class="operationButton" appearance="icon" @click="pasteAction('content')"
+                        title="Paste">
                         <span class="codicon codicon-repo-push"></span>
                     </vscode-button>
-                    <vscode-button class="operationButton" appearance="icon" @click="clearAction('content')" title="Clear">
+                    <vscode-button class="operationButton" appearance="icon" @click="clearAction('content')"
+                        title="Clear">
                         <span class="codicon codicon-trash"></span>
                     </vscode-button>
                 </div>
@@ -109,11 +119,11 @@
                                     console.log(match);
                                     for (let i in match) {
 
-                                        resultHtml += `<div><span class="codicon codicon-circle-filled"></span>&nbsp;${htmlEscape(match[i])}</div>`;
+                                        resultHtml += `<div><span class="codicon codicon-circle-filled resultIcon"></span>${htmlEscape(match[i])}</div>`;
                                     }
-                                    this.state.result = `<span class="True"><span class="codicon codicon-check"></span>&nbsp;True, match: </span>${resultHtml}`
+                                    this.state.result = `<span class="True"><span class="codicon codicon-check resultIcon"></span>True, match: </span>${resultHtml}`
                                 } else {
-                                    this.state.result = '<span class="False"><span class="codicon codicon-close"></span>&nbsp;False</span>';
+                                    this.state.result = '<span class="False"><span class="codicon codicon-close resultIcon"></span>False</span>';
                                 }
                             } else {
                                 this.state.result = '';

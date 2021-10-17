@@ -1,9 +1,13 @@
-@q = hello%20world,%20i%20am%20mike
+@q = table
 
-@param = ?client=dict-chrome-ex&dj=1&ie=utf8&oe=utf8&dt=t&dt=bd&dt=ex&dt=rm&dt=at&dt=md&dt=ss&sl=auto&tl=zh-CN&q=
+@param = ?client=gtx&dj=1&ie=utf8&oe=utf8&dt=t&dt=bd&dt=ex&dt=rm&dt=at&dt=md&dt=ss&sl=auto&tl=zh-CN&q=
 
 GET https://translate.googleapis.com/translate_a/single{{param}}{{q}}
 
 ###
 
 GET https://translate.googleapis.com/translate_tts?client=dict-chrome-ex&ie=utf8&sl=auto&tl=en&q=hello
+
+###
+
+GET https://translate.googleapis.com/translate_a/single?client=gtx&dj=1&ie=utf8&oe=utf8&dt=t&dt=rm&dt=bd&dt=ex&dt=md&dt=ss&dt=at&hl=zh-CN&tl=zh-CN&sl=en&q=hello

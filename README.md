@@ -10,7 +10,7 @@ This extension provides translation (based on [Google Translation](https://trans
 - HTTP proxy support.
 - [Settings](#settings)
 - [Simple Translation](#simple-translation)
-- [Complete Translation](#complete-translation) (Coming soon...)
+- [Complete Translation](#complete-translation)
 - Extra
   - [Regular Expression Test](#regular-expression-test)
   - Getting ss from URL

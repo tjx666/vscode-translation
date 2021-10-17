@@ -1,5 +1,8 @@
 # Change Log
 
+## 1.0.9
+- Add complete translation.
+
 ## 1.0.8
 - Optimise UI.
 - Add pronunciation support.
