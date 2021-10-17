@@ -46,7 +46,7 @@ This extension provides translation (based on [Google Translation](https://trans
 
 ### Simple Translation
 - Select text in editor and right click, choose `Translate (Simple)`,
-and the translation for selected text will be showed in notification.
+and the translation for selected text will be shown in notification.
 
 ![simple-translate-screenshot](resources/screenshot/simple-translate.jpg)
 
@@ -54,7 +54,7 @@ and the translation for selected text will be showed in notification.
 
 ### Complete Translation
 - Select text in editor and right click, choose `Translate (Complete)`,
-and the translation for selected text will be showed in Translation panel.
+and the translation for selected text will be shown in Translation panel.
 
 ![complete-translate-screenshot](resources/screenshot/complete-translate.jpg)
 
