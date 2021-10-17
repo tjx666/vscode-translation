@@ -7,11 +7,15 @@
     <link rel="stylesheet" href="css/common.css" />
     <style>
         .True {
-            color: var(--vscode-testing-iconPassed);
+            color: var(--vscode-charts-green);
         }
 
         .False {
-            color: var(--vscode-testing-iconFailed);
+            color: var(--vscode-charts-red);
+        }
+
+        .Error {
+            color: var(--vscode-charts-blue);
         }
 
         .textArea {
@@ -52,7 +56,7 @@
             </div>
             <div class="contentToTest">
                 <div class="contentToTest_textArea">
-                    <vscode-text-area class="textArea" v-model="state.content" rows="5">Content to test:
+                    <vscode-text-area class="textArea" v-model="state.content" rows="5">Test Content:
                     </vscode-text-area>
                 </div>
                 <div class="contentToTest_operation">
@@ -129,7 +133,7 @@
                                 this.state.result = '';
                             }
                         } catch (e) {
-                            this.state.result = `<span class="codicon codicon-alert"></span>&nbsp;${htmlEscape(e.message)}`;
+                            this.state.result = `<span class="Error"><span class="codicon codicon-alert"></span>&nbsp;${htmlEscape(e.message)}</span>`;
                         }
                     } else {
                         this.state.result = '';

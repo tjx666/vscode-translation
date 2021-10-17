@@ -89,7 +89,7 @@
         }
 
         .pronunceSourceLang {
-            color: var(--vscode-gitDecoration-addedResourceForeground);
+            color: var(--vscode-charts-green);
         }
 
         .exampleIndex {
@@ -102,7 +102,7 @@
 
         .dictPos {
             margin-bottom: 5px;
-            color: var(--vscode-list-highlightForeground);
+            color: var(--vscode-charts-green);
         }
 
         .dictEntry {
@@ -112,6 +112,12 @@
         .dictWord {
             padding-right: 10px;
             word-break: keep-all;
+            vertical-align: top;
+            color: var(--vscode-charts-blue);
+        }
+
+        .dictReverse {
+            vertical-align: top;
         }
 
         .dictPosIcon {
@@ -128,6 +134,16 @@
 
         .link {
             cursor: pointer;
+        }
+
+        .link:hover {
+            border: 1px solid;
+        }
+
+        .defineTitle {
+            word-break: keep-all;
+            vertical-align: top;
+            color: var(--vscode-charts-blue);
         }
     </style>
 </head>
@@ -261,7 +277,7 @@
                                         <tr v-for="(j, jIndex) in i.entry" :key="j.word + jIndex">
                                             <td class="dictWord"><span class="link"
                                                     @click="toSwapQuery(j.word)">{{j.word}}</span></td>
-                                            <td>
+                                            <td class="dictReverse">
                                                 <span v-html="getDictReverse(j.reverse_translation)"></span>
                                             </td>
                                         </tr>
@@ -285,7 +301,41 @@
                 </vscode-panel-view>
 
                 <vscode-panel-view aria-labelledby="definition">
-                    Coming soon ...
+                    <div v-if="state.result.definitions">
+                        <div class="exampleItem" v-for="(i, index) in state.result.definitions" :key="i.pos + index">
+                            <div class="dictPos"><span
+                                    class="codicon codicon-debug-breakpoint-log dictPosIcon"></span>{{i.pos}}</div>
+                            <div class="dictEntry">
+                                <table>
+                                    <tbody>
+                                        <template v-for="(j, jIndex) in i.entry" :key="j.gloss + jIndex">
+                                            <tr>
+                                                <td class="dictWord" rowspan="3">
+                                                    <vscode-badge>{{jIndex + 1}}</vscode-badge>
+                                                </td>
+                                                <td class="defineTitle">Definition:</td>
+                                                <td>{{j.gloss}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="defineTitle">Example:</td>
+                                                <td>{{j.example}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="defineTitle">Synonym:</td>
+                                                <td>
+                                                    <span
+                                                        v-html="getDictReverse(getSynsetsByDefineId(j.definition_id))"></span>
+                                                </td>
+                                            </tr>
+                                        </template>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div v-else>
+                        <div>No Data</div>
+                    </div>
                 </vscode-panel-view>
 
                 <vscode-panel-view aria-labelledby="example">
@@ -338,6 +388,15 @@
                 }, 100);
             },
             computed: {
+                synsetsEntries() {
+                    let result = [];
+                    if (this.state.result && this.state.result.synsets) {
+                        this.state.result.synsets.forEach(i => {
+                            result = [...result, ...i.entry];
+                        })
+                    }
+                    return result;
+                },
                 sourcePronunce() {
                     return this.state.result ?
                         this.state.result.sentences[1] ?
@@ -369,6 +428,15 @@
                 },
             },
             methods: {
+                getSynsetsByDefineId(id) {
+                    let result = [];
+                    this.synsetsEntries.forEach(i => {
+                        if (i.definition_id === id) {
+                            result = [...result, ...i.synonym];
+                        }
+                    });
+                    return result;
+                },
                 getDictReverse(arr) {
                     return arr.map(i => `<span class="link" onclick="appInstance.toQuery('${i}')">${i}</span>`).join(', ');
                 },

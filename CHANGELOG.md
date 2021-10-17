@@ -1,5 +1,8 @@
 # Change Log
 
+## 1.1.0
+- First complete version release.
+
 ## 1.0.9
 - Add complete translation.
 
