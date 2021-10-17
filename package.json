@@ -13,9 +13,9 @@
     "keywords": [
         "translate",
         "language",
-        "pronunciation",
+        "pronounce",
         "google",
-        "ffmepg"
+        "ffmpeg"
     ],
     "icon": "resources/vscode-translation-icon.png",
     "extensionKind": [
