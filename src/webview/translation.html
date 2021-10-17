@@ -159,11 +159,13 @@
                             </vscode-button>
                         </div>
                     </div>
+
                     <div>
                         <vscode-text-area v-model="state.source" class="textArea" rows="5" maxlength="200"
                             placeholder="Original Text">
                         </vscode-text-area>
                     </div>
+
                     <div>
                         <div>
                             <vscode-button class="pronunceButton" appearance="icon" @click="pronunciation('source')">
@@ -220,11 +222,13 @@
                             </vscode-button>
                         </div>
                     </div>
+
                     <div>
                         <vscode-text-area v-model="state.target" class="textArea" rows="5" maxlength="200"
                             placeholder="Translation">
                         </vscode-text-area>
                     </div>
+
                     <div>
                         <div>
                             <vscode-button class="pronunceButton" appearance="icon" @click="pronunciation('target')">
@@ -245,6 +249,7 @@
                 <vscode-panel-tab id="translation">Tanslation</vscode-panel-tab>
                 <vscode-panel-tab id="definition">Definition</vscode-panel-tab>
                 <vscode-panel-tab id="example">Example</vscode-panel-tab>
+
                 <vscode-panel-view aria-labelledby="translation">
                     <div v-if="state.result.dict">
                         <div class="dictItem" v-for="(i, index) in state.result.dict" :key="i.pos + index">
@@ -258,7 +263,6 @@
                                                     @click="toSwapQuery(j.word)">{{j.word}}</span></td>
                                             <td>
                                                 <span v-html="getDictReverse(j.reverse_translation)"></span>
-                                                <!-- <span v-for="(k, kIndex) in j.reverse_translation" :key="k + kIndex">{{k}}, </span> -->
                                             </td>
                                         </tr>
                                     </tbody>
@@ -279,9 +283,11 @@
                         <div v-else>No Data</div>
                     </div>
                 </vscode-panel-view>
+
                 <vscode-panel-view aria-labelledby="definition">
                     Coming soon ...
                 </vscode-panel-view>
+
                 <vscode-panel-view aria-labelledby="example">
                     <div v-if="state.result.examples">
                         <div class="exampleItem" v-for="(i, index) in state.result.examples.example"
