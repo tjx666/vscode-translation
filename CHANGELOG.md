@@ -1,5 +1,8 @@
 # Change Log
 
+## 1.1.3
+- Fix swapping translation swapping error.
+
 ## 1.1.2
 - Optimization.
 
