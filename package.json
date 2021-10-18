@@ -2,20 +2,13 @@
     "name": "vscode-translation",
     "displayName": "Translation",
     "description": "A translation tool for Visual Studio Code.",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "publisher": "caiqichang",
     "engines": {
         "vscode": "^1.61.0"
     },
     "categories": [
         "Other"
-    ],
-    "keywords": [
-        "translate",
-        "language",
-        "pronounce",
-        "google",
-        "ffmpeg"
     ],
     "icon": "resources/vscode-translation-icon.png",
     "extensionKind": [
