@@ -393,7 +393,7 @@
                     if (this.state.result && this.state.result.synsets) {
                         this.state.result.synsets.forEach(i => {
                             result = [...result, ...i.entry];
-                        })
+                        });
                     }
                     return result;
                 },
@@ -442,15 +442,15 @@
                 },
                 toQuery(text) {
                     this.state.source = text;
-                    this.state.sourceLang = this.state.temp.sourceLang,
-                        this.state.targetLang = this.state.temp.targetLang,
-                        this.query();
+                    this.state.sourceLang = this.state.temp.sourceLang;
+                    this.state.targetLang = this.state.temp.targetLang;
+                    this.query();
                 },
                 toSwapQuery(text) {
                     this.state.target = text;
-                    this.state.sourceLang = this.state.temp.sourceLang,
-                        this.state.targetLang = this.state.temp.targetLang,
-                        this.swapAction();
+                    this.state.sourceLang = this.state.temp.sourceLang;
+                    this.state.targetLang = this.state.temp.targetLang;
+                    this.swapAction();
                 },
                 renderCode(text) {
                     return text.replaceAll('<b>', '<code>').replaceAll('</b>', '</code>');

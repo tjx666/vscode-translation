@@ -65,7 +65,7 @@ const handler = (context, param) => {
                             let path = `${context.extensionPath}/sound`;
                             fs.mkdirSync(path, {
                                 recursive: true,
-                                mode: 0o777
+                                mode: 0o777,
                             });
                             let file = `${path}/tts.mp3`
                             fs.writeFileSync(file, data, {

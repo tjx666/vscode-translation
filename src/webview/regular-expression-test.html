@@ -122,10 +122,9 @@
                                 if (match) {
                                     console.log(match);
                                     for (let i in match) {
-
                                         resultHtml += `<div><span class="codicon codicon-circle-filled resultIcon"></span>${htmlEscape(match[i])}</div>`;
                                     }
-                                    this.state.result = `<span class="True"><span class="codicon codicon-check resultIcon"></span>True, match: </span>${resultHtml}`
+                                    this.state.result = `<span class="True"><span class="codicon codicon-check resultIcon"></span>True, match: </span>${resultHtml}`;
                                 } else {
                                     this.state.result = '<span class="False"><span class="codicon codicon-close resultIcon"></span>False</span>';
                                 }
