@@ -1,5 +1,8 @@
 # Change Log
 
+## 1.1.2
+- Optimization.
+
 ## 1.1.0
 - First complete version release.
 
