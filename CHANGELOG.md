@@ -1,5 +1,8 @@
 # Change Log
 
+## 1.1.4
+- Add simple chinese readme.
+
 ## 1.1.3
 - Fix swapping translation swapping error.
 

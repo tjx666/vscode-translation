@@ -1,19 +1,22 @@
 # vscode-translation
+
+English | [简体中文](README.zh-CN.md)
+
 This extension provides translation (based on [Google Translation](https://translate.google.com)) support for Visual Studio Code.
 
 [Get from Marketplace](https://marketplace.visualstudio.com/items?itemName=caiqichang.vscode-translation)
 
 ## Features
-- Multiple languages translation support.
-- Words or one sentence (support multiple lines, limit in 200 characters each time) translation support.
-- Pronunciation Support ([FFmpeg](https://ffmpeg.org) is required).
-- HTTP proxy support.
+- Multiple languages translation support
+- Words or one sentence (support multiple lines, limit in 200 characters each time) translation support
+- Pronunciation support ([FFmpeg](https://ffmpeg.org) is required)
+- HTTP proxy support
 - [Settings](#settings)
 - [Simple Translation](#simple-translation)
 - [Complete Translation](#complete-translation)
 - Extra
   - [Regular Expression Test](#regular-expression-test)
-  - Getting ss from URL
+  - Getting ss list from URL
 
 ## Usage
 ### Settings
@@ -34,10 +37,10 @@ This extension provides translation (based on [Google Translation](https://trans
   // Controls whether to decode ss result (base64).
   "translation.ss-enable-base64decode": false,
 
-  // Controls whether to use http proxy for getting ss.
+  // Controls whether to use http proxy for getting ss list.
   "translation.ss-enable-proxy": false,
 
-  // URLs array for getting ss.
+  // URLs array for getting ss list.
   "translation.ss-urls": [],
 }
 ```
