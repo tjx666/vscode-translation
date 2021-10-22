@@ -11,7 +11,7 @@
         "Other"
     ],
     "keywords": [
-        "translate", "翻译", "发音", "pronunciation", "google", "谷歌"
+        "translate", "翻译", "发音", "pronunciation", "pronounce", "google", "谷歌"
     ],
     "icon": "resources/vscode-translation-icon.png",
     "extensionKind": [
