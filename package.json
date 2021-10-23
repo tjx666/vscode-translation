@@ -2,7 +2,7 @@
     "name": "vscode-translation",
     "displayName": "Translation",
     "description": "A translation tool for Visual Studio Code.",
-    "version": "1.1.4",
+    "version": "1.1.5",
     "publisher": "caiqichang",
     "engines": {
         "vscode": "^1.61.0"
@@ -11,7 +11,13 @@
         "Other"
     ],
     "keywords": [
-        "translate", "翻译", "发音", "pronunciation", "pronounce", "google", "谷歌"
+        "translate",
+        "翻译",
+        "发音",
+        "pronunciation",
+        "pronounce",
+        "google",
+        "谷歌"
     ],
     "icon": "resources/vscode-translation-icon.png",
     "extensionKind": [
@@ -43,64 +49,12 @@
                 "translation.source-language": {
                     "description": "Default source language for translation.",
                     "type": "string",
-                    "default": "auto",
-                    "enum": [
-                        "auto", "zh-CN", "en", "zh-TW", "sq", "ar", "am", "az", "ga", "et",
-                        "eu", "be", "bg", "is", "pl", "bs", "fa", "af", "da", "de",
-                        "ru", "fr", "tl", "fi", "fy", "km", "ka", "gu", "kk", "ht",
-                        "ko", "ha", "nl", "ky", "gl", "ca", "cs", "kn", "co", "hr",
-                        "ku", "la", "lv", "lo", "lt", "lb", "rw", "ro", "mg", "mt",
-                        "mr", "ml", "ms", "mk", "mi", "mn", "bn", "my", "hmn", "xh",
-                        "zu", "ne", "no", "pa", "pt", "ps", "ny", "ja", "sv", "sm",
-                        "sr", "st", "si", "eo", "sk", "sl", "sw", "gd", "ceb", "so",
-                        "tg", "te", "ta", "th", "tr", "tk", "cy", "ur", "uk", "uz",
-                        "es", "iw", "el", "haw", "sd", "hu", "sn", "hy", "ig", "it",
-                        "yi", "hi", "su", "id", "jw", "yo", "vi"
-                    ],
-                    "enumDescriptions": [
-                        "Auto", "Chinese (Simple)", "English", "Chinese (Traditional)", "Albanian", "Arabic", "Amharic", "Azerbaijani", "Irish", "Estonian",
-                        "Basque", "Belarusian", "Bulgarian", "Icelandic", "Polish", "Bosnian", "Persian", "Afrikaans", "Danish", "German",
-                        "Russian", "French", "Filipino", "Finnish", "Frisian", "Khmer", "Georgian", "Gujarati", "Kazakh", "Haitian Creole",
-                        "Korean", "Hausa", "Dutch", "Kyrgyz", "Galician", "Catalan", "Czech", "Kannada", "Corsican", "Croatian",
-                        "Kurdish", "Latin", "Latvian", "Lao", "Lithuanian", "Luxembourgish", "Kinyarwanda", "Romanian", "Malagasy", "Maltese",
-                        "Marathi", "Malayalam", "Malay", "Macedonian", "Maori", "Mongolian", "Bengali", "Myanmar", "Hmong", "Xhosa",
-                        "Zulu", "Nepali", "Norwegian", "Punjabi", "Portuguese", "Pashto", "Chichewa", "Japanese", "Swedish", "Samoan",
-                        "Serbian", "Sesotho", "Sinhala", "Esperanto", "Slovak", "Slovenian", "Swahili", "Scots Gaelic", "Cebuano", "Somali",
-                        "Tajik", "Telugu", "Tamil", "Thai", "Turkish", "Turkmen", "Welsh", "Urdu", "Ukrainian", "Uzbek",
-                        "Spanish", "Hebrew", "Greek", "Hawaiian", "Sindhi", "Hungarian", "Shona", "Armenian", "Igbo", "Italian",
-                        "Yiddish", "Hindi", "Sundanese", "Indonesian", "Javanese", "Yoruba", "Vietnamese"
-                    ]
+                    "default": "auto"
                 },
                 "translation.target-language": {
                     "description": "Default target language for translation.",
                     "type": "string",
-                    "default": "en",
-                    "enum": [
-                        "zh-CN", "en", "zh-TW", "sq", "ar", "am", "az", "ga", "et",
-                        "eu", "be", "bg", "is", "pl", "bs", "fa", "af", "da", "de",
-                        "ru", "fr", "tl", "fi", "fy", "km", "ka", "gu", "kk", "ht",
-                        "ko", "ha", "nl", "ky", "gl", "ca", "cs", "kn", "co", "hr",
-                        "ku", "la", "lv", "lo", "lt", "lb", "rw", "ro", "mg", "mt",
-                        "mr", "ml", "ms", "mk", "mi", "mn", "bn", "my", "hmn", "xh",
-                        "zu", "ne", "no", "pa", "pt", "ps", "ny", "ja", "sv", "sm",
-                        "sr", "st", "si", "eo", "sk", "sl", "sw", "gd", "ceb", "so",
-                        "tg", "te", "ta", "th", "tr", "tk", "cy", "ur", "uk", "uz",
-                        "es", "iw", "el", "haw", "sd", "hu", "sn", "hy", "ig", "it",
-                        "yi", "hi", "su", "id", "jw", "yo", "vi"
-                    ],
-                    "enumDescriptions": [
-                        "Chinese (Simple)", "English", "Chinese (Traditional)", "Albanian", "Arabic", "Amharic", "Azerbaijani", "Irish", "Estonian",
-                        "Basque", "Belarusian", "Bulgarian", "Icelandic", "Polish", "Bosnian", "Persian", "Afrikaans", "Danish", "German",
-                        "Russian", "French", "Filipino", "Finnish", "Frisian", "Khmer", "Georgian", "Gujarati", "Kazakh", "Haitian Creole",
-                        "Korean", "Hausa", "Dutch", "Kyrgyz", "Galician", "Catalan", "Czech", "Kannada", "Corsican", "Croatian",
-                        "Kurdish", "Latin", "Latvian", "Lao", "Lithuanian", "Luxembourgish", "Kinyarwanda", "Romanian", "Malagasy", "Maltese",
-                        "Marathi", "Malayalam", "Malay", "Macedonian", "Maori", "Mongolian", "Bengali", "Myanmar", "Hmong", "Xhosa",
-                        "Zulu", "Nepali", "Norwegian", "Punjabi", "Portuguese", "Pashto", "Chichewa", "Japanese", "Swedish", "Samoan",
-                        "Serbian", "Sesotho", "Sinhala", "Esperanto", "Slovak", "Slovenian", "Swahili", "Scots Gaelic", "Cebuano", "Somali",
-                        "Tajik", "Telugu", "Tamil", "Thai", "Turkish", "Turkmen", "Welsh", "Urdu", "Ukrainian", "Uzbek",
-                        "Spanish", "Hebrew", "Greek", "Hawaiian", "Sindhi", "Hungarian", "Shona", "Armenian", "Igbo", "Italian",
-                        "Yiddish", "Hindi", "Sundanese", "Indonesian", "Javanese", "Yoruba", "Vietnamese"
-                    ]
+                    "default": "en"
                 },
                 "translation.enable-proxy": {
                     "description": "Controls whether to use http proxy for translation.",
@@ -177,22 +131,12 @@
         }
     },
     "scripts": {
-        "lint": "eslint .",
-        "pretest": "npm run lint",
-        "test": "node ./test/runTest.js",
         "prepackage": "node script/pre-package.js",
         "package": "npx --package vsce vsce package -o build/"
     },
     "devDependencies": {
-        "@types/glob": "^7.1.4",
-        "@types/mocha": "^9.0.0",
         "@types/node": "14.x",
-        "@types/vscode": "^1.61.0",
-        "@vscode/test-electron": "^1.6.2",
-        "eslint": "^7.32.0",
-        "glob": "^7.1.7",
-        "mocha": "^9.1.1",
-        "typescript": "^4.4.3"
+        "@types/vscode": "^1.61.0"
     },
     "dependencies": {
         "@vscode/codicons": "0.0.25",
