@@ -39,10 +39,12 @@ const handler = context => {
                         });
 
                         let result = [];
-                        Promise.all(promises).then(allData => {
+                        Promise.all(promises).then(allData => {            
                             allData.forEach(data => {
                                 let raw = enableDecode ? Buffer.from(data.toString(), 'base64').toString() : data.toString();
-                                let arr = raw.match(/ss:\/\/.+/g);
+                                let arr = raw.match(/(?:^|\n)ss:\/\/.+/g);
+                                // distinct
+                                arr = [...new Set(arr)];
                                 arr.forEach(i => {
                                     let t = i.trim();
                                     result.push({

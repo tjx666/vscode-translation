@@ -1,5 +1,8 @@
 # Change Log
 
+## 1.1.7
+- Fix ss match error.
+
 ## 1.1.5
 - Optimization.
 
