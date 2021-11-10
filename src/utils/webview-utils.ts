@@ -1,5 +1,5 @@
-const vscode = require('vscode');
-const path = require('path');
+import * as vscode from 'vscode';
+import * as path from 'path';
 
 /**
  * Render webview resource
@@ -9,8 +9,8 @@ const path = require('path');
  * @param array [{src: src-uri-text-in-html, path: true-uri-path}]
  * @returns renderered content
  */
-const renderReources = (context, panel, content, array) => {
-    let result = '' + content;
+const renderReources: Function = (context: vscode.ExtensionContext, panel: vscode.WebviewPanel, content: string, array: Array<any>): string => {
+    let result: string = '' + content;
     [...[
         {
             src: 'vscode-webview-ui-toolkit',
@@ -33,12 +33,12 @@ const renderReources = (context, panel, content, array) => {
             path: 'src/webview/css/common.css',
         },
     ], ...array].forEach(i => {
-        let truePath = panel.webview.asWebviewUri(vscode.Uri.file(path.join(context.extensionPath, i.path)));
-        result = result.replace(i.src, truePath);
+        let truePath: vscode.Uri = panel.webview.asWebviewUri(vscode.Uri.file(path.join(context.extensionPath, i.path)));
+        result = result.replace(i.src, truePath.toString());
     });
     return result;
 }
 
-module.exports = {
+export default {
     renderReources,
 };

@@ -1,17 +1,16 @@
-const vscode = require('vscode');
-const fs = require('fs');
-const path = require('path');
-const webviewUtils = require('../utils/webview-utils.js');
-const googleTranslateUtils = require('../utils/google-translation-utils.js');
-const { URL } = require('url');
-const child_process = require('child_process');
+import * as vscode from 'vscode';
+import * as fs from 'fs';
+import * as path from 'path';
+import webviewUtils from '../utils/webview-utils.js';
+import googleTranslateUtils from '../utils/google-translation-utils.js';
+import * as child_process from 'child_process';
 
-let panel = null;
+let panel: vscode.WebviewPanel | null = null;
 
-const handler = (context, param) => {
-    let selection = null;
+const handler: Function = (context: vscode.ExtensionContext, param: any): void => {
+    let selection: string | null | undefined = null;
     if (!param.fromCommand) {
-        selection = vscode.window.activeTextEditor.document.getText(vscode.window.activeTextEditor.selection);
+        selection = vscode.window.activeTextEditor?.document.getText(vscode.window.activeTextEditor.selection);
     }
 
     if (panel) {
@@ -25,8 +24,8 @@ const handler = (context, param) => {
             });
         }
     } else {
-        let config = vscode.workspace.getConfiguration('translation');
-        fs.readFile(`${context.extensionPath}/src/webview/translation.html`, (error, content) => {
+        let config: vscode.WorkspaceConfiguration = vscode.workspace.getConfiguration('translation');
+        fs.readFile(`${context.extensionPath}/src/webview/translation.html`, (error: NodeJS.ErrnoException | null, content: Buffer) => {
             if (error) {
                 console.log(error);
                 vscode.window.showErrorMessage(error.message);
@@ -46,28 +45,28 @@ const handler = (context, param) => {
                     path: 'src/webview/js/language.js',
                 },
             ]);
-            panel.webview.onDidReceiveMessage(message => {
+            panel.webview.onDidReceiveMessage((message: any) => {
                 switch (message.operation) {
                     case 'getTranslate': {
-                        googleTranslateUtils.getTranslate(message.parameter).then(data => {
-                            panel.webview.postMessage({
+                        googleTranslateUtils.getTranslate(message.parameter).then((data: any) => {
+                            panel?.webview.postMessage({
                                 operation: 'receiveTranslation',
                                 parameter: data,
                             });
-                        }).catch(error => {
+                        }).catch((error: Error) => {
                             console.log(error);
-                            vscode.window.showErrorMessage(error);
+                            vscode.window.showErrorMessage(error.toString());
                         });
                         break;
                     }
                     case 'getTts': {
-                        googleTranslateUtils.getTts(message.parameter).then(data => {
+                        googleTranslateUtils.getTts(message.parameter).then((data: Buffer) => {
                             let path = `${context.extensionPath}/sound`;
                             fs.mkdirSync(path, {
                                 recursive: true,
                                 mode: 0o777,
                             });
-                            let file = `${path}/tts.mp3`
+                            let file: string = `${path}/tts.mp3`
                             fs.writeFileSync(file, data, {
                                 mode: 0o777,
                             });
@@ -81,8 +80,8 @@ const handler = (context, param) => {
             panel.webview.postMessage({
                 operation: 'init',
                 parameter: {
-                    sl: config.get('source-language'),
-                    tl: config.get('target-language'),
+                    sl: config.get<string>('source-language'),
+                    tl: config.get<string>('target-language'),
                     q: selection,
                 },
             });
@@ -90,6 +89,6 @@ const handler = (context, param) => {
     }
 };
 
-module.exports = {
+export default {
     handler,
 };

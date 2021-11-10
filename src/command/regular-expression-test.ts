@@ -1,15 +1,15 @@
-const vscode = require('vscode');
-const fs = require('fs');
-const path = require('path');
-const webviewUtils = require('../utils/webview-utils.js');
+import * as vscode from 'vscode';
+import * as fs from 'fs';
+import * as path from 'path';
+import webviewUtils from '../utils/webview-utils.js';
 
-let panel = null;
+let panel: vscode.WebviewPanel | null = null;
 
-const handler = context => {
+const handler: Function = (context: vscode.ExtensionContext): void => {
     if (panel) {
         panel.reveal();
     } else {
-        fs.readFile(`${context.extensionPath}/src/webview/regular-expression-test.html`, (error, content) => {
+        fs.readFile(`${context.extensionPath}/src/webview/regular-expression-test.html`, (error: NodeJS.ErrnoException | null, content: Buffer) => {
             if (error) {
                 console.log(error);
                 vscode.window.showErrorMessage(error.message);
@@ -27,6 +27,6 @@ const handler = context => {
     }
 };
 
-module.exports = {
+export default {
     handler,
 };

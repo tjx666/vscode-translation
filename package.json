@@ -2,10 +2,10 @@
     "name": "vscode-translation",
     "displayName": "Translation",
     "description": "A translation tool for Visual Studio Code.",
-    "version": "1.1.7",
     "publisher": "caiqichang",
+    "version": "1.1.8",
     "engines": {
-        "vscode": "^1.61.0"
+        "vscode": "^1.62.0"
     },
     "categories": [
         "Other"
@@ -33,7 +33,7 @@
         "type": "git",
         "url": "https://github.com/caiqichang/vscode-translation"
     },
-    "main": "./extension.js",
+    "main": "./out/extension.js",
     "activationEvents": [
         "onCommand:simpleTranslate",
         "onCommand:completeTranslate",
@@ -131,12 +131,15 @@
         }
     },
     "scripts": {
+        "precompile": "node script/pre-compile.js",
+        "compile": "tsc -p ./",
         "prepackage": "node script/pre-package.js",
         "package": "npx --package vsce vsce package -o build/"
     },
     "devDependencies": {
+        "@types/vscode": "^1.62.0",
         "@types/node": "14.x",
-        "@types/vscode": "^1.61.0"
+        "typescript": "^4.4.4"
     },
     "dependencies": {
         "@vscode/codicons": "0.0.25",

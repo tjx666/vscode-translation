@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.1.8
+- Migrate to Typescript.
+- Fix prepackage script error.
+
 ## 1.1.7
 - Fix ss match error.
 

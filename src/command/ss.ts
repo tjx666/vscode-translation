@@ -1,16 +1,16 @@
-const vscode = require('vscode');
-const fs = require('fs');
-const path = require('path');
-const webviewUtils = require('../utils/webview-utils.js');
-const httpProxy = require('../utils/http-proxy.js');
+import * as vscode from 'vscode';
+import * as fs from 'fs';
+import * as path from 'path';
+import webviewUtils from '../utils/webview-utils.js';
+import httpProxy from '../utils/http-proxy.js';
 
-let panel = null;
+let panel: vscode.WebviewPanel | null = null;
 
-const handler = context => {
+const handler: Function = (context: vscode.ExtensionContext): void => {
     if (panel) {
         panel.reveal();
     } else {
-        fs.readFile(`${context.extensionPath}/src/webview/ss.html`, (error, content) => {
+        fs.readFile(`${context.extensionPath}/src/webview/ss.html`, (error: NodeJS.ErrnoException | null, content: Buffer) => {
             if (error) {
                 console.log(error);
                 vscode.window.showErrorMessage(error.message);
@@ -28,25 +28,25 @@ const handler = context => {
             panel.webview.onDidReceiveMessage(message => {
                 switch (message.operation) {
                     case 'query': {
-                        let config = vscode.workspace.getConfiguration('translation');
-                        let urls = config.get('ss-urls')
-                        let enableProxy = config.get('ss-enable-proxy');
-                        let enableDecode = config.get('ss-enable-base64decode');
+                        let config: vscode.WorkspaceConfiguration = vscode.workspace.getConfiguration('translation');
+                        let urls: Array<string> | undefined = config.get<Array<string>>('ss-urls')
+                        let enableProxy: boolean | undefined = config.get<boolean>('ss-enable-proxy');
+                        let enableDecode: boolean | undefined = config.get<boolean>('ss-enable-base64decode');
 
-                        let promises = [];
-                        urls.forEach(i => {
+                        let promises: Array<Promise<Buffer>> = [];
+                        urls?.forEach(i => {
                             promises.push(httpProxy.doGet(i, enableProxy));
                         });
 
-                        let result = [];
-                        Promise.all(promises).then(allData => {            
-                            allData.forEach(data => {
-                                let raw = enableDecode ? Buffer.from(data.toString(), 'base64').toString() : data.toString();
-                                let arr = raw.match(/(?:^|\n)ss:\/\/.+/g);
+                        let result: Array<any> = [];
+                        Promise.all<Buffer>(promises).then((allData: Array<Buffer>) => {
+                            allData.forEach((data: Buffer) => {
+                                let raw: string = enableDecode ? Buffer.from(data.toString(), 'base64').toString() : data.toString();
+                                let arr: Array<string> | null = raw.match(/(?:^|\n)ss:\/\/.+/g);
                                 // distinct
                                 arr = [...new Set(arr)];
-                                arr.forEach(i => {
-                                    let t = i.trim();
+                                arr.forEach((i: string) => {
+                                    let t: string = i.trim();
                                     result.push({
                                         checked: false,
                                         origin: t,
@@ -55,13 +55,13 @@ const handler = context => {
                                 });
                             });
 
-                            panel.webview.postMessage({
+                            panel?.webview.postMessage({
                                 operation: 'result',
                                 parameter: {
                                     list: result,
                                 },
                             });
-                        }).catch(error => {
+                        }).catch((error: Error) => {
                             console.log(error);
                             vscode.window.showErrorMessage(error.message)
                         });
@@ -78,6 +78,6 @@ const handler = context => {
     }
 };
 
-module.exports = {
+export default {
     handler,
 };
