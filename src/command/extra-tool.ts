@@ -9,14 +9,14 @@ const handler: Function = (context: vscode.ExtensionContext): void => {
     if (panel) {
         panel.reveal();
     } else {
-        fs.readFile(`${context.extensionPath}/src/webview/regular-expression-test.html`, (error: NodeJS.ErrnoException | null, content: Buffer) => {
+        fs.readFile(`${context.extensionPath}/src/webview/extra-tool.html`, (error: NodeJS.ErrnoException | null, content: Buffer) => {
             if (error) {
                 console.log(error);
                 vscode.window.showErrorMessage(error.message);
                 return;
             }
 
-            panel = vscode.window.createWebviewPanel('regularExpressionTestPanel', 'Regular Expression Test', vscode.ViewColumn.Beside, {
+            panel = vscode.window.createWebviewPanel('extraTool', 'Extra Tool', vscode.ViewColumn.Beside, {
                 enableScripts: true,
                 localResourceRoots: [vscode.Uri.file(path.join(context.extensionPath))],
                 enableFindWidget: true,

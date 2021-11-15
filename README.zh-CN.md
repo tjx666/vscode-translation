@@ -14,9 +14,10 @@
 - [设置](#设置)
 - [简单翻译](#简单翻译)
 - [完整翻译](#完整翻译)
-- 其他
-  - [正则表达式测试](#正则表达式测试)
-  - 从URL获取ss列表
+- [附加工具](#附加工具)
+  - 正则表达式测试
+  - Base64编码和解码
+- 从URL获取ss列表
 
 ## 用法
 ### 设置
@@ -34,14 +35,8 @@
   // 用于HTTP代理的URL。
   "translation.proxy-url": "http://127.0.0.1:1080",
 
-  // 是否为获取的ss结果使用base64解码。
-  "translation.ss-enable-base64decode": false,
-
-  // 是否使用HTTP代理获取ss列表。
-  "translation.ss-enable-proxy": false,
-
-  // 用于获取ss列表的URL。
-  "translation.ss-urls": [],
+  // ss列表，每项包含属性：url(string)、enableProxy(boolean)、enableBase64Decode(boolean)。
+  "translation.ss": [],
 }
 ```
 
@@ -183,10 +178,10 @@
 
 [返回顶部](#特性)
 
-### 正则表达式测试
-- 使用命令`Regular Expression Test`打开正则表达式测试面板。
+### 附加工具
+- 使用命令`Extra Tool`打开附加工具面板。
 
-![regular-expression-test-screenshot](resources/screenshot/regular-expression-test.jpg)
+![extra-tool-screenshot](resources/screenshot/extra-tool.jpg)
 
 [返回顶部](#特性)
 

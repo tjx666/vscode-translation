@@ -14,9 +14,10 @@ This extension provides translation (based on [Google Translation](https://trans
 - [Settings](#settings)
 - [Simple Translation](#simple-translation)
 - [Complete Translation](#complete-translation)
-- Extra
-  - [Regular Expression Test](#regular-expression-test)
-  - Getting ss list from URL
+- [Extra Tool](#extra-tool)
+  - Regular Expression Test
+  - Base64 Encode and Decode
+- Getting ss list from URL
 
 ## Usage
 ### Settings
@@ -34,14 +35,8 @@ This extension provides translation (based on [Google Translation](https://trans
   // URL for http proxy.
   "translation.proxy-url": "http://127.0.0.1:1080",
 
-  // Controls whether to decode ss result (base64).
-  "translation.ss-enable-base64decode": false,
-
-  // Controls whether to use http proxy for getting ss list.
-  "translation.ss-enable-proxy": false,
-
-  // URLs array for getting ss list.
-  "translation.ss-urls": [],
+  // ss list, each item include properties: url(string), enabkeProxy(boolean), enableBase64Decode(boolean).
+  "translation.ss": [],
 }
 ```
 
@@ -185,10 +180,10 @@ and the translation for selected text will be shown in Translation panel.
 
 [Back to top](#features)
 
-### Regular Expression Test
-- Use command `Regular Expression Test` to open Regular Expression Test panel.
+### Extra Tool
+- Use command `Extra Tool` to open Extra Tool panel.
 
-![regular-expression-test-screenshot](resources/screenshot/regular-expression-test.jpg)
+![extra-tool-screenshot](resources/screenshot/extra-tool.jpg)
 
 [Back to top](#features)
 

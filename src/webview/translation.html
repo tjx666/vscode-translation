@@ -261,10 +261,10 @@
 
         <div>
             <vscode-progress-ring v-if="state.loading"></vscode-progress-ring>
-            <vscode-panels v-if="state.result" activeid="translation" aria-label="With Active Tab">
-                <vscode-panel-tab id="translation">Tanslation</vscode-panel-tab>
-                <vscode-panel-tab id="definition">Definition</vscode-panel-tab>
-                <vscode-panel-tab id="example">Example</vscode-panel-tab>
+            <vscode-panels v-if="state.result" :activeid="state.currentTab">
+                <vscode-panel-tab id="translation" @click="tabChange('translation')">Tanslation</vscode-panel-tab>
+                <vscode-panel-tab id="definition" @click="tabChange('definition')">Definition</vscode-panel-tab>
+                <vscode-panel-tab id="example" @click="tabChange('example')">Example</vscode-panel-tab>
 
                 <vscode-panel-view aria-labelledby="translation">
                     <div v-if="state.result.dict">
@@ -375,6 +375,7 @@
                         history: [],
                         loading: false,
                         temp: null,
+                        currentTab: 'translation',
                     },
                     sourceLangList: SOURCE_LANGUAGE,
                     targetLangList: TARGET_LANGUAGE,
@@ -428,6 +429,10 @@
                 },
             },
             methods: {
+                tabChange(id) {
+                    this.state.currentTab = id;
+                    vscode.setState(this.state);
+                },
                 getSynsetsByDefineId(id) {
                     let result = [];
                     this.synsetsEntries.forEach(i => {

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Extra Tool</title>
+    <link rel="stylesheet" href="vscode-codicons" />
+    <link rel="stylesheet" href="css/common.css" />
+    <style>
+        .True {
+            color: var(--vscode-charts-green);
+        }
+
+        .False {
+            color: var(--vscode-charts-red);
+        }
+
+        .Error {
+            color: var(--vscode-charts-blue);
+        }
+
+        .textArea {
+            width: 100%;
+        }
+
+        .operationButton {
+            margin-right: 5px;
+        }
+
+        .resultIcon {
+            margin-right: 5px;
+        }
+
+        .panelView {
+            width: 100%;
+        }
+
+        .base64Button {
+            margin: 5px 10px 5px 0px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+        <form>
+            <vscode-panels :activeid="state.currentTab">
+                <vscode-panel-tab id="regularExpression" @click="tabChange('regularExpression')">Regular Expression
+                </vscode-panel-tab>
+                <vscode-panel-tab id="base64" @click="tabChange('base64')">Base64</vscode-panel-tab>
+
+                <vscode-panel-view aria-labelledby="regularExpression">
+                    <div class="panelView">
+                        <div>
+                            <div>
+                                <vscode-text-field class="textArea" v-model="state.regex.expression">Regular Expression:
+                                </vscode-text-field>
+                            </div>
+                            <div>
+                                <vscode-button class="operationButton" appearance="icon"
+                                    @click="copyAction(state.regex.expression)" title="Copy">
+                                    <span class="codicon codicon-repo-pull"></span>
+                                </vscode-button>
+                                <vscode-button class="operationButton" appearance="icon"
+                                    @click="pasteAction(text => state.regex.expression = text)" title="Paste">
+                                    <span class="codicon codicon-repo-push"></span>
+                                </vscode-button>
+                                <vscode-button class="operationButton" appearance="icon"
+                                    @click="state.regex.expression = ''" title="Clear">
+                                    <span class="codicon codicon-trash"></span>
+                                </vscode-button>
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                <vscode-text-area class="textArea" v-model="state.regex.content" rows="5">Test Content:
+                                </vscode-text-area>
+                            </div>
+                            <div>
+                                <vscode-button class="operationButton" appearance="icon"
+                                    @click="copyAction(state.regex.content)" title="Copy">
+                                    <span class="codicon codicon-repo-pull"></span>
+                                </vscode-button>
+                                <vscode-button class="operationButton" appearance="icon"
+                                    @click="pasteAction(text => state.regex.content = text)" title="Paste">
+                                    <span class="codicon codicon-repo-push"></span>
+                                </vscode-button>
+                                <vscode-button class="operationButton" appearance="icon"
+                                    @click="state.regex.content = ''" title="Clear">
+                                    <span class="codicon codicon-trash"></span>
+                                </vscode-button>
+                            </div>
+                        </div>
+                        <vscode-divider></vscode-divider>
+                        <div>
+                            <div>Result: </div>
+                            <div v-html="state.regex.result"></div>
+                        </div>
+
+                    </div>
+                </vscode-panel-view>
+
+                <vscode-panel-view aria-labelledby="base64">
+                    <div class="panelView">
+                        <div>
+                            <div>
+                                <vscode-text-area class="textArea" v-model="state.base64.ascii" rows="5">ASCII Content:
+                                </vscode-text-area>
+                            </div>
+                            <div>
+                                <vscode-button class="operationButton" appearance="icon"
+                                    @click="copyAction(state.base64.ascii)" title="Copy">
+                                    <span class="codicon codicon-repo-pull"></span>
+                                </vscode-button>
+                                <vscode-button class="operationButton" appearance="icon"
+                                    @click="pasteAction(text => state.base64.ascii = text)" title="Paste">
+                                    <span class="codicon codicon-repo-push"></span>
+                                </vscode-button>
+                                <vscode-button class="operationButton" appearance="icon"
+                                    @click="state.base64.ascii = ''" title="Clear">
+                                    <span class="codicon codicon-trash"></span>
+                                </vscode-button>
+                            </div>
+                        </div>
+                        <div>
+                            <vscode-button class="base64Button" @click="checkBase64('atob')">
+                                <span class="codicon codicon-arrow-down"></span>&nbsp;Decode
+                            </vscode-button>
+                            <vscode-button class="base64Button" @click="checkBase64('btoa')">
+                                <span class="codicon codicon-arrow-up"></span>&nbsp;Encode
+                            </vscode-button>
+                        </div>
+                        <div>
+                            <div>
+                                <vscode-text-area class="textArea" v-model="state.base64.binary" rows="5">Binary
+                                    Content:
+                                </vscode-text-area>
+                            </div>
+                            <div>
+                                <vscode-button class="operationButton" appearance="icon"
+                                    @click="copyAction(state.base64.binary)" title="Copy">
+                                    <span class="codicon codicon-repo-pull"></span>
+                                </vscode-button>
+                                <vscode-button class="operationButton" appearance="icon"
+                                    @click="pasteAction(text => state.base64.binary = text)" title="Paste">
+                                    <span class="codicon codicon-repo-push"></span>
+                                </vscode-button>
+                                <vscode-button class="operationButton" appearance="icon"
+                                    @click="state.base64.binary = ''" title="Clear">
+                                    <span class="codicon codicon-trash"></span>
+                                </vscode-button>
+                            </div>
+                        </div>
+                        <vscode-divider></vscode-divider>
+                        <div v-if="state.base64.result">
+                            <div>Error: </div>
+                            <div v-html="state.base64.result"></div>
+                        </div>
+                    </div>
+                </vscode-panel-view>
+            </vscode-panels>
+        </form>
+    </div>
+
+    <script type="module" src="vscode-webview-ui-toolkit"></script>
+    <script src="js/vue3.js"></script>
+    <script src="js/common.js"></script>
+    <script>
+        'use strict';
+        const vscode = acquireVsCodeApi();
+
+        const app = Vue.createApp({
+            data() {
+                return {
+                    state: {
+                        regex: {
+                            expression: '',
+                            content: '',
+                            result: '',
+                        },
+                        base64: {
+                            ascii: '',
+                            binary: '',
+                            result: '',
+                        },
+                        currentTab: 'regularExpression',
+                    },
+                };
+            },
+            created() {
+                let preState = vscode.getState();
+                if (preState) this.state = preState;
+            },
+            watch: {
+                'state.regex.expression'() {
+                    this.checkRegex();
+                },
+                'state.regex.content'() {
+                    this.checkRegex();
+                },
+                'state.base64.ascii'() {
+                    vscode.setState(this.state);
+                },
+                'state.base64.binary'() {
+                    vscode.setState(this.state);
+                },
+            },
+            methods: {
+                tabChange(id) {
+                    this.state.currentTab = id;
+                    vscode.setState(this.state);
+                },
+                checkRegex() {
+                    if (this.state.regex.expression) {
+                        try {
+                            let pattern = new RegExp(this.state.regex.expression, 'g');
+                            if (this.state.regex.content) {
+                                let match = this.state.regex.content.match(pattern);
+                                let resultHtml = '';
+                                if (match) {
+                                    for (let i in match) {
+                                        resultHtml += `<div><span class="codicon codicon-circle-filled resultIcon"></span>${htmlEscape(match[i])}</div>`;
+                                    }
+                                    this.state.regex.result = `<span class="True"><span class="codicon codicon-check resultIcon"></span>True, match: </span>${resultHtml}`;
+                                } else {
+                                    this.state.regex.result = '<span class="False"><span class="codicon codicon-close resultIcon"></span>False</span>';
+                                }
+                            } else {
+                                this.state.regex.result = '';
+                            }
+                        } catch (e) {
+                            this.state.regex.result = `<span class="Error"><span class="codicon codicon-alert"></span>&nbsp;${htmlEscape(e.message)}</span>`;
+                        }
+                    } else {
+                        this.state.regex.result = '';
+                    }
+                    vscode.setState(this.state);
+                },
+                checkBase64(direction) {
+                    this.state.base64.result = '';
+                    try {
+                        switch (direction) {
+                            case 'atob': {
+                                if (this.state.base64.ascii) {
+                                    this.state.base64.binary = window.atob(this.state.base64.ascii);
+                                }
+                                break;
+                            }
+                            case 'btoa': {
+                                if (this.state.base64.binary) {
+                                    this.state.base64.ascii = window.btoa(this.state.base64.binary);
+                                }
+                                break;
+                            }
+                            default: {
+
+                                break;
+                            }
+                        }
+                    } catch (e) {
+                        this.state.base64.result = `<span class="Error"><span class="codicon codicon-alert"></span>&nbsp;${htmlEscape(e.message)}</span>`;
+                    }
+
+                    vscode.setState(this.state);
+                },
+                copyAction(target) {
+                    if (target) {
+                        window.navigator.clipboard.writeText(target);
+                    }
+                },
+                pasteAction(callback) {
+                    window.navigator.clipboard.readText().then(text => {
+                        if (text && typeof callback === 'function') {
+                            callback(text);
+                        }
+                    });
+                },
+            },
+        });
+        app.config.compilerOptions.isCustomElement = tag => tag.startsWith('vscode-');
+        const appInstance = app.mount('#app');
+    </script>
+</body>
+
+</html>

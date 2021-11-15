@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.1.9
+- Config proxy and base64 decode for each ss URL.
+- Add Extra Tool.
+- Migrate regular expression test to Extra Tool.
+- Add Base64 encode and decode to Extra Tool.
+
 ## 1.1.8
 - Migrate to Typescript.
 - Fix prepackage script error.

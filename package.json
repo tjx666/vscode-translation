@@ -3,7 +3,7 @@
     "displayName": "Translation",
     "description": "A translation tool for Visual Studio Code.",
     "publisher": "caiqichang",
-    "version": "1.1.8",
+    "version": "1.1.9",
     "engines": {
         "vscode": "^1.62.0"
     },
@@ -38,7 +38,7 @@
         "onCommand:simpleTranslate",
         "onCommand:completeTranslate",
         "onCommand:translation",
-        "onCommand:regularExpressionTest",
+        "onCommand:extraTool",
         "onCommand:ss",
         "onCommand:fileTemplate"
     ],
@@ -66,18 +66,8 @@
                     "type": "string",
                     "default": "http://127.0.0.1:1080"
                 },
-                "translation.ss-enable-proxy": {
-                    "description": "Controls whether to use http proxy for getting ss list.",
-                    "type": "boolean",
-                    "default": false
-                },
-                "translation.ss-enable-base64decode": {
-                    "description": "Controls whether to decode ss result (base64).",
-                    "type": "boolean",
-                    "default": false
-                },
-                "translation.ss-urls": {
-                    "description": "URLs array for getting ss list.",
+                "translation.ss": {
+                    "description": "ss list, each item include properties: url(string), enabkeProxy(boolean), enableBase64Decode(boolean).",
                     "type": "array",
                     "default": []
                 }
@@ -97,8 +87,8 @@
                 "title": "Translation"
             },
             {
-                "command": "regularExpressionTest",
-                "title": "Regular Expression Test"
+                "command": "extraTool",
+                "title": "Extra Tool"
             },
             {
                 "command": "ss",

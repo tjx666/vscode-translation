@@ -2,7 +2,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 
-import regularExpressionTest from './command/regular-expression-test.js';
+import extraTool from './command/extra-tool.js';
 import simpleTranslate from './command/simple-translate.js';
 import completeTranslate from './command/complete-translate.js';
 import ss from './command/ss.js';
@@ -14,7 +14,7 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.commands.registerCommand(command, () => handler(context, handlerParam));
     };
 
-    register('regularExpressionTest', regularExpressionTest.handler, null);
+    register('extraTool', extraTool.handler, null);
     register('simpleTranslate', simpleTranslate.handler, null);
     register('completeTranslate', completeTranslate.handler, { fromCommand: false });
     register('translation', completeTranslate.handler, { fromCommand: true });

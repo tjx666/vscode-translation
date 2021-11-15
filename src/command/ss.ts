@@ -3,6 +3,8 @@ import * as fs from 'fs';
 import * as path from 'path';
 import webviewUtils from '../utils/webview-utils.js';
 import httpProxy from '../utils/http-proxy.js';
+import { resolve } from 'path';
+import { rejects } from 'assert';
 
 let panel: vscode.WebviewPanel | null = null;
 
@@ -29,20 +31,23 @@ const handler: Function = (context: vscode.ExtensionContext): void => {
                 switch (message.operation) {
                     case 'query': {
                         let config: vscode.WorkspaceConfiguration = vscode.workspace.getConfiguration('translation');
-                        let urls: Array<string> | undefined = config.get<Array<string>>('ss-urls')
-                        let enableProxy: boolean | undefined = config.get<boolean>('ss-enable-proxy');
-                        let enableDecode: boolean | undefined = config.get<boolean>('ss-enable-base64decode');
+                        let urls: Array<any> | undefined = config.get<Array<any>>('ss')
 
-                        let promises: Array<Promise<Buffer>> = [];
+                        let promises: Array<Promise<string>> = [];
                         urls?.forEach(i => {
-                            promises.push(httpProxy.doGet(i, enableProxy));
+                            promises.push(new Promise<string>((resolve: Function, reject: Function) => {
+                                httpProxy.doGet(i.url, i.enableProxy)
+                                    .then((data: Buffer) => {
+                                        resolve(i.enableBase64Decode ? Buffer.from(data.toString(), 'base64').toString() : data.toString());
+                                    })
+                                    .catch((error: Error) => reject(error));
+                            }));
                         });
 
                         let result: Array<any> = [];
-                        Promise.all<Buffer>(promises).then((allData: Array<Buffer>) => {
-                            allData.forEach((data: Buffer) => {
-                                let raw: string = enableDecode ? Buffer.from(data.toString(), 'base64').toString() : data.toString();
-                                let arr: Array<string> | null = raw.match(/(?:^|\n)ss:\/\/.+/g);
+                        Promise.all<string>(promises).then((allData: Array<string>) => {
+                            allData.forEach((data: string) => {
+                                let arr: Array<string> | null = data.match(/(?:^|\n)ss:\/\/.+/g);
                                 // distinct
                                 arr = [...new Set(arr)];
                                 arr.forEach((i: string) => {
